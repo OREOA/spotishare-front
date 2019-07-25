@@ -31,7 +31,7 @@ const Login = () => (
         </Col>
       </Row>
       <div className={styles.loginContainer}>
-        <a href={'/login'}>
+        <a href={`${process.env.REACT_APP_API_URL}/login`}>
           <button className={styles.loginButton}>
             <SpotifyLogo className={styles.spotifyLogo} />
             Login with Spotify

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../spotishare-back/.idea/spotishare-back.iml" filepath="$PROJECT_DIR$/../spotishare-back/.idea/spotishare-back.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/spotishare-front.iml" filepath="$PROJECT_DIR$/.idea/spotishare-front.iml" />
     </modules>
   </component>

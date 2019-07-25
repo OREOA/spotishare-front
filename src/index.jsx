@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+
+import './axiosDefaultSettings'
+
 import './index.scss'
 import SpotishareRouter from './components/SpotishareRouter'
 import * as serviceWorker from './serviceWorker'

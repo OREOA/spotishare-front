@@ -13,6 +13,9 @@ $container-max-widths: (
   padding-left: 24px;
   padding-right: 24px;
 }
+html {
+  background: fixed linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 22.4%, #D9D9D9 100%);
+}
 
 html,
 body {
@@ -25,7 +28,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333333;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 22.4%, #D9D9D9 100%);
 }
 
 #root {

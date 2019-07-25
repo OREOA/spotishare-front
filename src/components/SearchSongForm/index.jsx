@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { searchSong } from '../../services/calls'
+import { searchSong } from '../../services/songApi'
 import Downshift from 'downshift'
 import throttle from 'lodash/throttle'
 

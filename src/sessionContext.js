@@ -1,19 +1,5 @@
-import { createContext } from 'react'
+import React from 'react'
 
-let session = {
-  name: 'Aapeli Haanpuu',
-  hash: 'fasdfasdf',
-  imageUrl: 'aapeli.jpg'
-}
-
-const SessionContext = createContext({
-  session,
-  setSession: (s) => {
-    session = {
-      ...session,
-      ...s
-    }
-  }
-})
+const SessionContext = React.createContext(null)
 
 export default SessionContext

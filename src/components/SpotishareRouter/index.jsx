@@ -1,20 +1,14 @@
 import React from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
-import App from '../FrontPage'
-import Login from '../Login'
-import Session from '../Session'
+import SpotishareApp from '../SpotishareApp'
 
 const history = createBrowserHistory()
 
 const SpotishareRouter = () => (
-  <Router history={history}>
-    <Switch>
-      <Route path="/(session|s)/:id" component={Session} />
-      <Route path="/login" component={Login} />
-      <Route path="/" component={App} />
-    </Switch>
-  </Router>
+    <Router history={history}>
+        <SpotishareApp />
+    </Router>
 )
 
 export default SpotishareRouter
