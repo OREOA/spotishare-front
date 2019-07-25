@@ -26,17 +26,19 @@ const Session = () => {
     }, [])
 
     return (
-        <Container>
+        <React.Fragment>
             <Navbar backButtonPath={'/'} />
-            <h1>Now playing</h1>
-            {current && (
-                <React.Fragment>
-                    <CurrentSong song={current.song} progress={current.progress} />
-                    <Progress progress={current.progress / current.song.duration_ms} className={styles.progress} />
-                    <Queue queue={[current.song, current.song, current.song]} className={styles.queue} />
-                </React.Fragment>
-            )}
-        </Container>
+            <Container>
+                <h1>Now playing</h1>
+                {current && (
+                    <React.Fragment>
+                        <CurrentSong song={current.song} progress={current.progress} />
+                        <Progress progress={current.progress / current.song.duration_ms} className={styles.progress} />
+                        <Queue queue={[current.song, current.song, current.song]} className={styles.queue} />
+                    </React.Fragment>
+                )}
+            </Container>
+        </React.Fragment>
     )
 }
 
