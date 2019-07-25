@@ -27,7 +27,7 @@ const SearchResultsContainer = styled.div`
 `
 
 
-const SearchResults = (props) => {
+const Index = (props) => {
     return (
         <SearchResultsContainer>
             <span className={'title'}>Osumat</span>
@@ -62,4 +62,4 @@ const SearchResults = (props) => {
     )
 }
 
-export default SearchResults
+export default Index

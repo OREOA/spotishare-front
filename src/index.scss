@@ -1,0 +1,56 @@
+$grid-gutter-width: 16px;
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 720px,
+    xl: 720px
+) !default;
+@import "~bootstrap/scss/bootstrap-grid";
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+.container {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+html {
+  background: fixed linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 22.4%, #D9D9D9 100%);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333333;
+}
+
+#root {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 300;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}

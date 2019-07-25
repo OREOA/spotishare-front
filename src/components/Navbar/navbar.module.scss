@@ -1,0 +1,34 @@
+.navbar {
+  height: 84px;
+
+  :global(.container),
+  .left,
+  .center,
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  :global(.container) {
+    justify-content: space-between;
+  }
+
+}
+
+.left {
+
+}
+
+.right {
+
+}
+
+.center {
+
+}
+
+.logo {
+  height: 48px;
+}

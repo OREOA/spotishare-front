@@ -1,0 +1,82 @@
+.sessionHashInput {
+  width: 100%;
+  height: 56px;
+  position: relative;
+  cursor: text;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #B21ED7;
+  }
+
+  &.focused {
+    .inputPlaceholder {
+      bottom: 31px;
+      color: #B21ED7;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+}
+
+.input {
+  height: 20px;
+  width: 100%;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  z-index: 1;
+  vertical-align: bottom;
+  margin-top: 26px;
+}
+
+.inputPlaceholder {
+  position: absolute;
+  bottom: 10px;
+  z-index: -1;
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.button {
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+
+.input,
+.inputPlaceholder {
+  font-size: 16px;
+  line-height: 19px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.icon {
+  height: 23px;
+}
+
+.iconContainer {
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+
+  &:not(.disabled) {
+    .button {
+      cursor: pointer;
+    }
+
+    .icon {
+      fill: #B21ED7;
+    }
+  }
+
+  .icon {
+    fill: #CFCFCF;
+  }
+}

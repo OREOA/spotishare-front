@@ -1,0 +1,38 @@
+
+.albumImage {
+  overflow: hidden;
+  margin-right: 16px;
+  height: 60px;
+  padding-left: 8px;
+
+  img {
+    height: 100%;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.songName {
+  margin: 0;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 24px;
+}
+
+.songArtist {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 5px 0 0;
+}
+
+@media (min-width: 720px) {
+  .albumImage {
+    height: 100px;
+    margin-right: 24px;
+  }
+}

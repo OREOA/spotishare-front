@@ -74,7 +74,7 @@ const QueueContainer = styled.div`
 `
 
 
-const SongQueue = (props) => {
+const Index = (props) => {
     return (
         <QueueContainer>
             <span className={'title'}>Biisilista</span>
@@ -104,4 +104,4 @@ const SongQueue = (props) => {
     )
 }
 
-export default SongQueue
+export default Index

@@ -1,0 +1,53 @@
+.currentSession {
+  height: 48px;
+  display: flex;
+  margin-top: 24px;
+  color: inherit;
+
+  .currentSessionImage {
+    height: 100%;
+    border-radius: 50%;
+    width: 48px;
+    margin-right: 16px;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .button {
+    border: none;
+    background: none;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .currentSessionInfo {
+    flex: 1;
+
+    .name {
+      font-size: 16px;
+      line-height: 24px;
+      margin: 2px 0 0;
+    }
+
+    .sessionHash {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 300;
+      margin: 0;
+    }
+  }
+
+  .iconContainer {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      height: 23px;
+      fill: #B21ED7;
+    }
+  }
+}

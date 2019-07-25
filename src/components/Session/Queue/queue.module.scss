@@ -1,0 +1,45 @@
+.container {
+
+}
+
+.song {
+  margin-bottom: 16px;
+}
+
+.albumImage {
+  overflow: hidden;
+  margin-right: 8px;
+  height: 48px;
+  padding-left: 8px;
+
+  img {
+    height: 100%;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.songName {
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.songArtist {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 5px 0 0;
+}
+
+@media (min-width: 720px) {
+  .albumImage {
+    height: 60px;
+    margin-right: 16px;
+  }
+}
