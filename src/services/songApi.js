@@ -7,10 +7,11 @@ export const sendSong = (songId, session) => axios.post(`${apiUrl}/song`, {
     session,
 })
 
-export const searchSong = (searchQuery) => {
+export const searchSong = (searchQuery, session) => {
     return axios.get(`${apiUrl}/search`, {
         params: {
             searchQuery,
+            session,
         },
     })
         .then((response) => response.data.body.tracks.items.slice(0, 6))
