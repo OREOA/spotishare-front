@@ -1,4 +1,33 @@
+$search-transition: 0.3s ease-in;
+
+.sessionContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .contentContainer {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+.sessionContainer.searchOpen {
+  .contentContainer {
+    flex: 0;
+    height: 0;
+  }
+}
+
+.contentContainer {
+  transition: $search-transition;
+}
+
 .progress,
 .queue {
   margin-top: 32px;
+}
+
+.search {
+  width: 100%;
 }

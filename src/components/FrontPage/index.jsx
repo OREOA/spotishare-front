@@ -5,11 +5,11 @@ import Navbar from '../Navbar'
 import SessionHashInput from './SessionHashInput'
 
 import styles from './frontPage.module.scss'
-import SessionContext from '../../sessionContext'
+import SpotishareContext from '../../spotishareContext'
 import { Link } from 'react-router-dom'
 
 const FrontPage = ({ onNewSession }) => {
-    const session = useContext(SessionContext)
+    const { session } = useContext(SpotishareContext)
 
     return (
         <React.Fragment>

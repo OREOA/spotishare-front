@@ -6,12 +6,31 @@ import FrontPage from '../FrontPage'
 
 import { createSession, getMe, getSession } from '../../services/sessionApi'
 import Login from '../Login'
-import SessionContext from '../../sessionContext'
+import SpotishareContext from '../../spotishareContext'
+import { getCurrentSong, getSongList } from '../../services/songApi'
+
+const ONE_SECOND = 1000
 
 const SpotishareApp = () => {
+    let interval
+
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [session, setSession] = useState(null)
+    const [current, setCurrent] = useState(null)
+    const [queue, setQueue] = useState([])
+
+    const initCalls = () => {
+        clearInterval(interval)
+        const call = () => {
+            getCurrentSong(session.hash)
+                .then(setCurrent)
+            getSongList(session.hash)
+                .then(setQueue)
+        }
+        interval = setInterval(call, ONE_SECOND)
+        call()
+    }
 
     useEffect(() => {
         setLoading(true)
@@ -23,6 +42,7 @@ const SpotishareApp = () => {
             .catch(() => {
                 setLoading(false)
             })
+        return () => clearInterval(interval)
     }, [])
 
     const onSessionChange = (s) => setSession({ ...session, ...s })
@@ -33,6 +53,12 @@ const SpotishareApp = () => {
                 onSessionChange(data)
             })
     }, [])
+
+    useEffect(() => {
+        if (session) {
+            initCalls()
+        }
+    }, [session])
 
     const onNewSession = () => {
         createSession()
@@ -46,12 +72,12 @@ const SpotishareApp = () => {
     ) : !user ? (
         <Login />
     ) : (
-        <SessionContext.Provider value={session}>
+        <SpotishareContext.Provider value={{ session, current, queue }}>
             <Switch>
                 <Route path="/(session|s)/:id" component={Session} />
                 <Route path="/" component={() => <FrontPage onNewSession={onNewSession} />} />
             </Switch>
-        </SessionContext.Provider>
+        </SpotishareContext.Provider>
     )
 }
 
