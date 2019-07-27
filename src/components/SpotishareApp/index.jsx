@@ -7,7 +7,7 @@ import FrontPage from '../FrontPage'
 import { createSession, getMe, getSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
-import { getCurrentSong, getSongList } from '../../services/songApi'
+import { getCurrent } from '../../services/songApi'
 
 const ONE_SECOND = 1000
 
@@ -18,15 +18,12 @@ const SpotishareApp = () => {
     const [user, setUser] = useState(null)
     const [session, setSession] = useState(null)
     const [current, setCurrent] = useState(null)
-    const [queue, setQueue] = useState([])
 
     const initCalls = () => {
         clearInterval(interval)
         const call = () => {
-            getCurrentSong(session.hash)
+            getCurrent(session.hash)
                 .then(setCurrent)
-            getSongList(session.hash)
-                .then(setQueue)
         }
         interval = setInterval(call, ONE_SECOND)
         call()
@@ -55,7 +52,7 @@ const SpotishareApp = () => {
     }, [])
 
     useEffect(() => {
-        if (session) {
+        if (session && session.hash) {
             initCalls()
         }
     }, [session])
@@ -72,7 +69,7 @@ const SpotishareApp = () => {
     ) : !user ? (
         <Login />
     ) : (
-        <SpotishareContext.Provider value={{ session, current, queue }}>
+        <SpotishareContext.Provider value={{ session, current }}>
             <Switch>
                 <Route path="/(session|s)/:id" component={Session} />
                 <Route path="/" component={() => <FrontPage onNewSession={onNewSession} />} />

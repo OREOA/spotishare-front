@@ -11,7 +11,7 @@ import Search from './Search'
 import styles from './session.module.scss'
 
 const Session = () => {
-    const { queue, current } = useContext(SpotishareContext)
+    const { current } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
     const onOpen = () => setSearchOpen(true)
@@ -35,7 +35,7 @@ const Session = () => {
                                 progress={current.progress / current.song.duration_ms}
                                 className={styles.progress}
                             />
-                            <Queue queue={queue} className={styles.queue} />
+                            <Queue queue={current.queue} className={styles.queue} />
                         </React.Fragment>
                     )}
                 </Container>
