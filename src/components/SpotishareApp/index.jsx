@@ -16,7 +16,7 @@ const SpotishareApp = () => {
 
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
-    const [session, setSession] = useState(null)
+    const [session, setSession] = useState({})
     const [current, setCurrent] = useState(null)
     const [queue, setQueue] = useState([])
 
@@ -55,7 +55,7 @@ const SpotishareApp = () => {
     }, [])
 
     useEffect(() => {
-        if (session) {
+        if (session.hash) {
             initCalls()
         }
     }, [session])
