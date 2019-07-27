@@ -6,7 +6,7 @@ import SongList from '../../SongList'
 
 const Queue = ({ queue, className }) => (
     <div className={classNames(styles.container, className)}>
-        <SongList songs={queue} />
+        <SongList songs={queue} onSongClick={() => ''}/>
     </div>
 )
 
