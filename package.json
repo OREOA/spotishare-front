@@ -1,7 +1,36 @@
 {
-  "name": "spotishare",
+  "name": "spotishare-front",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "contributors": [
+    {
+      "name": "Otso Hellmann",
+      "url": "https://github.com/OtsoHellman"
+    },
+    {
+      "name": "Aapeli Haanpuu",
+      "url": "https://github.com/aapzu"
+    },
+    {
+      "name": "Riku Ruokonen",
+      "url": "https://github.com/RikuRuokonen"
+    },
+    {
+      "name": "Otto Hyytiälä",
+      "url": "https://github.com/hyytiala"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OREOA/spotishare-front.git"
+  },
+  "license": "UNLICENCED",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
@@ -16,14 +45,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-spinners": "^0.5.4",
-    "reactstrap": "^8.0.1",
-    "styled-components": "^4.3.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "reactstrap": "^8.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
