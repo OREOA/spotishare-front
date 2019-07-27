@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import classNames from 'classnames'
 import { Container } from 'reactstrap'
 import Navbar from '../Navbar'
@@ -6,19 +6,28 @@ import SessionHashInput from './SessionHashInput'
 
 import styles from './frontPage.module.scss'
 import SpotishareContext from '../../spotishareContext'
-import { Link } from 'react-router-dom'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { Session } from '../../types/session'
 
-const FrontPage = ({ onNewSession }) => {
+type FrontPageProps = {
+    onNewSession: () => void
+} & RouteComponentProps
+
+export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history }) => {
     const { session } = useContext(SpotishareContext)
+
+    const onSessionOpen = (hash: Session['hash']) => {
+        history.push(`/session/${hash}`)
+    }
 
     return (
         <React.Fragment>
             <Navbar backButton={false} />
-            <Container className={styles.frontPageContainer}>
+            <Container>
                 <div className={styles.titleContainer}>
                     <h1>Start playing</h1>
                 </div>
-                <div className={styles.container}>
+                <div>
                     {/*{false && (*/}
                     {/*    <div className={styles.section}>*/}
                     {/*        <h2 className={styles.title}>Current session</h2>*/}
@@ -27,7 +36,7 @@ const FrontPage = ({ onNewSession }) => {
                     {/*)}*/}
                     <div className={styles.section}>
                         <h2 className={styles.title}>Join a session</h2>
-                        <SessionHashInput />
+                        <SessionHashInput onSend={onSessionOpen} />
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {session && session.hash ? (
@@ -46,4 +55,4 @@ const FrontPage = ({ onNewSession }) => {
     )
 }
 
-export default FrontPage
+export default withRouter(FrontPage)

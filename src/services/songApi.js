@@ -14,7 +14,7 @@ export const searchSong = (searchQuery, session) => {
             session,
         },
     })
-    .then((response) => response.data.body && response.data.body.tracks && response.data.body.tracks.items || [])
+    .then((response) => (response.data.body && response.data.body.tracks && response.data.body.tracks.items) || [])
 }
 
 export const getSongList = (session) => axios.get(`${apiUrl}/song`, {

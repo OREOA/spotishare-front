@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
