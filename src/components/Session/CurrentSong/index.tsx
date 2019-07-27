@@ -1,15 +1,19 @@
 import React from 'react'
 
 import styles from './currentSong.module.scss'
-import Row from 'reactstrap/es/Row'
-import Col from 'reactstrap/es/Col'
+import { Row, Col } from 'reactstrap'
+import { Song } from '../../../types/song';
 
-const CurrentSong = ({ song }) => {
+type CurrentSongProps = {
+    song: Song
+}
+
+const CurrentSong: React.FC<CurrentSongProps> = ({ song }) => {
     return (
         <Row className={styles.currentSong}>
             <div className={styles.albumImage}>
                 <img
-                    srcSet={song.album.images.reverse().map((a) => `${a.url} ${a.width}w`)}
+                    srcSet={song.album.images.reverse().map((a) => `${a.url} ${a.width}w`).join(',')}
                     src={song.album.images[song.album.images.length - 1].url}
                 />
             </div>

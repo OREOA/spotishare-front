@@ -2,15 +2,21 @@ import React from 'react'
 import Song from './Song'
 
 import styles from './songList.module.scss'
+import { Song as SongType } from '../../types/song'
 
-const SongList = ({ songs, onSongClick }) => {
+type SongListProps = {
+    songs: SongType[],
+    onSongClick: (song: SongType) => void
+}
+
+const SongList: React.FC<SongListProps> = ({ songs, onSongClick }) => {
     return (
-        <div className={styles.songList}>
-            {songs && songs.map((song, i) => (
+        <div>
+            {songs && songs.map((song) => (
                 <Song
                     song={song}
                     className={styles.song}
-                    key={i}
+                    key={song.id}
                     onClick={() => onSongClick(song)}
                 />
             ))}

@@ -3,8 +3,14 @@ import classNames from 'classnames'
 
 import styles from './queue.module.scss'
 import SongList from '../../SongList'
+import { Song } from '../../../types/song';
 
-const Queue = ({ queue, className }) => (
+type QueueProps = {
+    queue: Song[],
+    className?: string
+}
+
+const Queue: React.FC<QueueProps> = ({ queue, className }) => (
     <div className={classNames(styles.container, className)}>
         <SongList songs={queue} onSongClick={() => ''}/>
     </div>

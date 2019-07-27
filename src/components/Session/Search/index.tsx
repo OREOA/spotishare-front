@@ -6,20 +6,30 @@ import SongList from '../../SongList'
 import styles from './search.module.scss'
 import { sendSong, searchSong } from '../../../services/songApi'
 import SpotishareContext from '../../../spotishareContext'
+import { Song } from '../../../types/song'
 
-const Search = ({ isOpen, onOpen, onClose, className }) => {
-    const { session: { hash } } = useContext(SpotishareContext)
+type SearchProps = {
+    isOpen: boolean,
+    onOpen: () => void,
+    onClose: () => void,
+    className?: string
+}
+
+const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) => {
+    const { session } = useContext(SpotishareContext)
+
+    const hash = session ? session.hash : ''
 
     const [value, setValue] = useState('')
     const [searchResults, setSearchResults] = useState([])
 
-    const search = throttle((text) => {
+    const search = throttle((text: string) => {
         searchSong(text, hash)
             .then(setSearchResults)
     }, 100)
 
-    const onChange = (e) => {
-        const text = e.target.value
+    const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const text = e.currentTarget.value
         setValue(text)
         if (text) {
             search(text)
@@ -28,7 +38,7 @@ const Search = ({ isOpen, onOpen, onClose, className }) => {
         }
     }
 
-    const onSongClick = (song) => {
+    const onSongClick = (song: Song) => {
         sendSong(song.id, hash)
             .then(() => {
                 setValue('')

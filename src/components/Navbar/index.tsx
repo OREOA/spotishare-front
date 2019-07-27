@@ -6,8 +6,9 @@ import Logo from '../Logo'
 import { Link } from 'react-router-dom'
 
 interface NavbarProps {
-    backButton: boolean,
-    backButtonPath?: string
+    backButton?: boolean,
+    backButtonPath?: string,
+    onBackButtonClick?: () => void
 }
 
 const BackIcon = () => (

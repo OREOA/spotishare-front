@@ -3,7 +3,12 @@ import classNames from 'classnames'
 
 import styles from './progress.module.scss'
 
-const Progress = ({ progress, className }) => (
+type ProgressProps = {
+    progress: number,
+    className?: string
+}
+
+const Progress: React.FC<ProgressProps> = ({ progress = 0, className }) => (
     <div className={classNames(styles.container, className)}>
         <div
             className={styles.progress}

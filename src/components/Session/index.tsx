@@ -10,7 +10,7 @@ import Search from './Search'
 
 import styles from './session.module.scss'
 
-const Session = () => {
+const Session: React.FC = () => {
     const { queue, current } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
@@ -30,7 +30,7 @@ const Session = () => {
                     <h1>Now playing</h1>
                     {current && current.song && (
                         <React.Fragment>
-                            <CurrentSong song={current.song} progress={current.progress} />
+                            <CurrentSong song={current.song} />
                             <Progress
                                 progress={current.progress / current.song.duration_ms}
                                 className={styles.progress}

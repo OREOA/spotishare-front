@@ -8,21 +8,25 @@ import { createSession, getMe, getSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
 import { getCurrentSong, getSongList } from '../../services/songApi'
+import { Session as SessionType } from '../../types/session'
 
 const ONE_SECOND = 1000
 
-const SpotishareApp = () => {
-    let interval
+const SpotishareApp: React.FC = () => {
+    let interval: NodeJS.Timeout
 
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
-    const [session, setSession] = useState(null)
+    const [session, setSession] = useState<SessionType | null>(null)
     const [current, setCurrent] = useState(null)
     const [queue, setQueue] = useState([])
 
     const initCalls = () => {
         clearInterval(interval)
         const call = () => {
+            if (!session) {
+                return
+            }
             getCurrentSong(session.hash)
                 .then(setCurrent)
             getSongList(session.hash)
@@ -45,7 +49,7 @@ const SpotishareApp = () => {
         return () => clearInterval(interval)
     }, [])
 
-    const onSessionChange = (s) => setSession({ ...session, ...s })
+    const onSessionChange = (s: SessionType) => setSession({ ...session, ...s })
 
     useEffect(() => {
         getSession()

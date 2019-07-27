@@ -5,7 +5,7 @@ import SpotishareApp from '../SpotishareApp'
 
 const history = createBrowserHistory()
 
-const SpotishareRouter = () => (
+const SpotishareRouter: React.FC = () => (
     <Router history={history}>
         <SpotishareApp />
     </Router>
