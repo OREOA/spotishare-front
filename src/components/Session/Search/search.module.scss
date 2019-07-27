@@ -1,5 +1,39 @@
-.container {
+@import "../session.module";
 
+.searchContainer {
+  height: 77px;
+  cursor: text;
+
+  &.active {
+    .input {
+      background-color: #CFCFCF;
+    }
+  }
+
+  &:not(.active) {
+    .searchResultContainer {
+      display: none;
+    }
+  }
+}
+
+.input {
+  display: block;
+  border: none;
+  height: 56px;
+  width: 100%;
+  border-radius: 28px;
+  background-color: #FFFFFF;
+  text-align: center;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 18px;
+  outline: none;
+  transition: $search-transition;
+}
+
+.searchResultContainer {
+  margin-top: 32px;
 }
 
 .song {

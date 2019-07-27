@@ -1,43 +1,53 @@
 import React, { useContext, useState, useEffect } from 'react'
-import SessionContext from '../../sessionContext'
 import { Container } from 'reactstrap'
+import classNames from 'classnames'
+import SpotishareContext from '../../spotishareContext'
 import Navbar from '../Navbar'
-import { getCurrentSong } from '../../services/songApi'
 import CurrentSong from './CurrentSong'
 import Progress from './Progress'
 import Queue from './Queue'
+import Search from './Search'
 
 import styles from './session.module.scss'
 
-const ONE_SECOND = 1000
-
 const Session = () => {
-    let currentSongInterval
+    const { queue, current } = useContext(SpotishareContext)
+    const [searchOpen, setSearchOpen] = useState(false)
 
-    const session = useContext(SessionContext)
-    const [current, setCurrent] = useState(null)
-
-    useEffect(() => {
-        currentSongInterval = setInterval(() => {
-            getCurrentSong(session.hash)
-                .then(setCurrent)
-        }, ONE_SECOND)
-        return () => clearInterval(currentSongInterval)
-    }, [])
+    const onOpen = () => setSearchOpen(true)
+    const onClose = () => setSearchOpen(false)
 
     return (
         <React.Fragment>
-            <Navbar backButtonPath={'/'} />
-            <Container>
-                <h1>Now playing</h1>
-                {current && (
-                    <React.Fragment>
-                        <CurrentSong song={current.song} progress={current.progress} />
-                        <Progress progress={current.progress / current.song.duration_ms} className={styles.progress} />
-                        <Queue queue={[current.song, current.song, current.song]} className={styles.queue} />
-                    </React.Fragment>
-                )}
-            </Container>
+            <div className={classNames(styles.sessionContainer, {
+                [styles.searchOpen]: searchOpen
+            })}>
+                <Navbar
+                    backButtonPath={!searchOpen ? '/' : undefined}
+                    onBackButtonClick={searchOpen ? () => setSearchOpen(false) : undefined}
+                />
+                <Container className={styles.contentContainer}>
+                    <h1>Now playing</h1>
+                    {current && current.song && (
+                        <React.Fragment>
+                            <CurrentSong song={current.song} progress={current.progress} />
+                            <Progress
+                                progress={current.progress / current.song.duration_ms}
+                                className={styles.progress}
+                            />
+                            <Queue queue={queue} className={styles.queue} />
+                        </React.Fragment>
+                    )}
+                </Container>
+                <Container>
+                    <Search
+                        className={styles.search}
+                        isOpen={searchOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                    />
+                </Container>
+            </div>
         </React.Fragment>
     )
 }

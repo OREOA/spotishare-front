@@ -16,12 +16,12 @@ const BackIcon = () => (
   </svg>
 )
 
-const Navbar = ({ backButton = true, backButtonPath }) => (
+const Navbar = ({ backButton = true, backButtonPath, onBackButtonClick }) => (
   <nav className={styles.navbar}>
     <Container>
       <div className={styles.left}>
         {backButton && (
-          <Link to={backButtonPath}>
+          <Link to={backButtonPath} onClick={onBackButtonClick}>
             <BackIcon />
           </Link>
         )}
