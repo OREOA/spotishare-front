@@ -4,24 +4,24 @@ import ArrowIcon from '../../../icons/ArrowIcon'
 import { Link } from 'react-router-dom'
 
 const CurrentSessionContainer = ({ session }) => (
-  <Link className={styles.currentSession} to="#">
-    <div className={styles.currentSessionImage}>
-      <img src={session.imageUrl} />
+    <div className={styles.currentSession}>
+        <div className={styles.currentSessionImage}>
+            <img src={session.owner && session.owner.images && session.owner.images[0].url} />
+        </div>
+        <div className={styles.currentSessionInfo}>
+            <p className={styles.name}>
+                {session.owner.display_name}
+            </p>
+            <p className={styles.sessionHash}>
+                {session.hash}
+            </p>
+        </div>
+        <div className={styles.iconContainer}>
+            <Link to={`/session/${session.hash}`} className={styles.button}>
+                <ArrowIcon className={styles.icon} />
+            </Link>
+        </div>
     </div>
-    <div className={styles.currentSessionInfo}>
-      <p className={styles.name}>
-        {session.name}
-      </p>
-      <p className={styles.sessionHash}>
-        {session.hash}
-      </p>
-    </div>
-    <div className={styles.iconContainer}>
-      <button className={styles.button}>
-        <ArrowIcon className={styles.icon} />
-      </button>
-    </div>
-  </Link>
 )
 
-export default CurrentSessionContainer
+export default React.memo(CurrentSessionContainer)
