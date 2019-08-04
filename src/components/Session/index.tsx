@@ -12,12 +12,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import styles from './session.module.scss'
 import { getCurrent } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
-import Timeout = NodeJS.Timeout
 
 const ONE_SECOND = 1000
 
-const Session: React.FC<RouteComponentProps> = ({ match }) => {
-    let interval: Timeout
+const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+    let interval: NodeJS.Timeout
     const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
@@ -27,8 +26,10 @@ const Session: React.FC<RouteComponentProps> = ({ match }) => {
     const initCalls = () => {
         clearInterval(interval)
         const call = () => {
-            getCurrent(session.hash)
-                .then(setCurrent)
+            if (session) {
+                getCurrent(session.hash)
+                    .then(setCurrent)
+            }
         }
         interval = setInterval(call, ONE_SECOND)
         call()

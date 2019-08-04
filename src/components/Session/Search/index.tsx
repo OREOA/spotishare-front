@@ -19,7 +19,7 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     const { session } = useContext(SpotishareContext)
 
     const [value, setValue] = useState('')
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState<Song[]>([])
 
     const search = throttle((text: string) => {
         if (session) {

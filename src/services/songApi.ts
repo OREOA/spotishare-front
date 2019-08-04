@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Song } from '../types/song';
 import { Session } from '../types/session'
+import { Current } from '../types/current'
 
 const apiUrl = `${process.env.REACT_APP_API_URL}/api`
 
@@ -9,7 +10,7 @@ export const sendSong = (songId: Song['id'], session: Session['hash']) => axios.
     session,
 })
 
-export const searchSong = (searchQuery: string, session: Session['hash']) => {
+export const searchSong = (searchQuery: string, session: Session['hash']): Promise<Song[]> => {
     return axios.get(`${apiUrl}/search`, {
         params: {
             searchQuery,
@@ -19,14 +20,7 @@ export const searchSong = (searchQuery: string, session: Session['hash']) => {
     .then((response) => (response.data.body && response.data.body.tracks && response.data.body.tracks.items) || [])
 }
 
-export const getSongList = (session: Session['hash']) => axios.get(`${apiUrl}/song`, {
-    params: {
-        session
-    }
-})
-    .then(({ data }) => data)
-
-export const getCurrentSong = (session: Session['hash']) => axios.get(`${apiUrl}/song/current`, {
+export const getCurrent = (session: Session['hash']): Promise<Current> => axios.get(`${apiUrl}/song/current`, {
     params: {
         session
     }

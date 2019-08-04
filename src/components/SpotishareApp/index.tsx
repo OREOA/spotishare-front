@@ -8,13 +8,15 @@ import { createSession, getMe, getOwnSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
 import { Session as SessionType } from '../../types/session'
+import { Current } from '../../types/current'
+import { User } from '../../types/user'
 
 const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<User | null>(null)
     const [session, setSession] = useState<SessionType | null>(null)
     const [ownSession, setOwnSession] = useState<SessionType | null>(null)
-    const [current, setCurrent] = useState(null)
+    const [current, setCurrent] = useState<Current | null>(null)
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') {
