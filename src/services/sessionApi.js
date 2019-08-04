@@ -9,3 +9,9 @@ export const getOwnSession = () => axios.get(`${apiUrl}/session/`)
 export const getSession = (hash) => axios.get(`${apiUrl}/session/${hash}`)
 
 export const createSession = () => axios.post(`${apiUrl}/session/`)
+
+export const endSession = (hash) => axios.delete(`${apiUrl}/session/`, {
+    params: {
+        session: hash
+    }
+})

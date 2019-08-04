@@ -49,13 +49,25 @@ const SpotishareApp = ({ history }) => {
     useEffect(() => {
         getOwnSession()
             .then(({ data }) => setOwnSession(data))
+            .catch(() => {
+                setLoading(false)
+            })
     }, [])
 
     const onNewSession = () => {
         createSession()
             .then(({ data }) => {
-                setOwnSession(data)
+                setOwnSession({
+                    ...data,
+                    owner: user
+                })
+                if (!session) {
+                    setSession(data.hash)
+                }
                 history.push(`/session/${data.hash}`)
+            })
+            .catch(() => {
+                setLoading(false)
             })
     }
 
@@ -78,4 +90,4 @@ const SpotishareApp = ({ history }) => {
     )
 }
 
-export default withRouter(React.memo(SpotishareApp))
+export default React.memo(withRouter(SpotishareApp))

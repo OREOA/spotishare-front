@@ -6,11 +6,20 @@ import SessionHashInput from './SessionHashInput'
 
 import styles from './frontPage.module.scss'
 import SpotishareContext from '../../spotishareContext'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import CurrentSessionContainer from './CurrentSessionContainer'
+import { getSession } from '../../services/sessionApi'
 
-const FrontPage = ({ onNewSession }) => {
-    const { session, ownSession } = useContext(SpotishareContext)
+const FrontPage = ({ onNewSession, history }) => {
+    const { session, setSession, ownSession } = useContext(SpotishareContext)
+
+    const onSend = (hash) => {
+        getSession(hash)
+            .then((session) => {
+                setSession(session)
+                history.push(`/session/${session.hash}`)
+            })
+    }
 
     return (
         <React.Fragment>
@@ -28,7 +37,7 @@ const FrontPage = ({ onNewSession }) => {
                     )}
                     <div className={styles.section}>
                         <h2 className={styles.title}>Join a session</h2>
-                        <SessionHashInput />
+                        <SessionHashInput onSend={onSend}/>
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {ownSession && ownSession.hash ? (
@@ -47,4 +56,4 @@ const FrontPage = ({ onNewSession }) => {
     )
 }
 
-export default React.memo(FrontPage)
+export default React.memo(withRouter(FrontPage))

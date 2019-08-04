@@ -4,6 +4,7 @@ import styles from './navbar.module.scss'
 import { Container } from 'reactstrap'
 import Logo from '../Logo'
 import { Link } from 'react-router-dom'
+import Menu from './Menu'
 
 const BackIcon = () => (
   <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +17,7 @@ const BackIcon = () => (
   </svg>
 )
 
-const Navbar = ({ backButton = true, backButtonPath, onBackButtonClick }) => (
+const Navbar = ({ backButton = true, backButtonPath, onBackButtonClick, menu = true }) => (
   <nav className={styles.navbar}>
     <Container>
       <div className={styles.left}>
@@ -30,7 +31,7 @@ const Navbar = ({ backButton = true, backButtonPath, onBackButtonClick }) => (
         <Logo className={styles.logo} />
       </div>
       <div className={styles.right}>
-
+          {menu && <Menu />}
       </div>
     </Container>
   </nav>
