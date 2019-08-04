@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const CurrentSessionContainer = ({ session }) => (
     <div className={styles.currentSession}>
         <div className={styles.currentSessionImage}>
-            <img src={session.owner && session.owner.images && session.owner.images[0].url} />
+            <img src={session.owner && session.owner.images && session.owner.images[0].url || '/icons/user.svg'} />
         </div>
         <div className={styles.currentSessionInfo}>
             <p className={styles.name}>
