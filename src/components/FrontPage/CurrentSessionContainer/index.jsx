@@ -10,7 +10,7 @@ const CurrentSessionContainer = ({ session }) => (
         </div>
         <div className={styles.currentSessionInfo}>
             <p className={styles.name}>
-                {session.owner.display_name}
+                {session.owner && session.owner.display_name}
             </p>
             <p className={styles.sessionHash}>
                 {session.hash}
