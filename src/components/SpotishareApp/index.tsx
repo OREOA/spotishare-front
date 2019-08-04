@@ -1,40 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom'
 
 import Session from '../Session'
 import FrontPage from '../FrontPage'
 
-import { createSession, getMe, getSession } from '../../services/sessionApi'
+import { createSession, getMe, getOwnSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
-import { getCurrentSong, getSongList } from '../../services/songApi'
 import { Session as SessionType } from '../../types/session'
 
-const ONE_SECOND = 1000
-
-const SpotishareApp: React.FC = () => {
-    let interval: NodeJS.Timeout
-
+const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [session, setSession] = useState<SessionType | null>(null)
+    const [ownSession, setOwnSession] = useState<SessionType | null>(null)
     const [current, setCurrent] = useState(null)
-    const [queue, setQueue] = useState([])
 
-    const initCalls = () => {
-        clearInterval(interval)
-        const call = () => {
-            if (!session) {
-                return
+    useEffect(() => {
+        if (typeof localStorage !== 'undefined') {
+            const raw = localStorage.getItem('spotishare')
+            const data = raw && JSON.parse(raw)
+            if (data && data.session) {
+                setSession(data.session)
             }
-            getCurrentSong(session.hash)
-                .then(setCurrent)
-            getSongList(session.hash)
-                .then(setQueue)
         }
-        interval = setInterval(call, ONE_SECOND)
-        call()
-    }
+    }, [])
+
+    useEffect(() => {
+        if (typeof localStorage !== 'undefined') {
+            if (session) {
+                localStorage.setItem('spotishare', JSON.stringify({
+                    session
+                }))
+            }
+        }
+    }, [session])
 
     useEffect(() => {
         setLoading(true)
@@ -46,28 +46,20 @@ const SpotishareApp: React.FC = () => {
             .catch(() => {
                 setLoading(false)
             })
-        return () => clearInterval(interval)
     }, [])
 
     const onSessionChange = (s: SessionType) => setSession({ ...session, ...s })
 
     useEffect(() => {
-        getSession()
-            .then(({ data }) => {
-                onSessionChange(data)
-            })
+        getOwnSession()
+            .then(({ data }) => setOwnSession(data))
     }, [])
-
-    useEffect(() => {
-        if (session) {
-            initCalls()
-        }
-    }, [session])
 
     const onNewSession = () => {
         createSession()
             .then(({ data }) => {
-                onSessionChange(data)
+                setOwnSession(data)
+                history.push(`/session/${data.hash}`)
             })
     }
 
@@ -76,7 +68,12 @@ const SpotishareApp: React.FC = () => {
     ) : !user ? (
         <Login />
     ) : (
-        <SpotishareContext.Provider value={{ session, current, queue }}>
+        <SpotishareContext.Provider value={{
+            session, setSession,
+            ownSession, setOwnSession,
+            user, setUser,
+            current, setCurrent
+        }}>
             <Switch>
                 <Route path="/(session|s)/:id" component={Session} />
                 <Route path="/" component={() => <FrontPage onNewSession={onNewSession} />} />
@@ -85,4 +82,4 @@ const SpotishareApp: React.FC = () => {
     )
 }
 
-export default SpotishareApp
+export default withRouter(React.memo(SpotishareApp))

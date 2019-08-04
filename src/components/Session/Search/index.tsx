@@ -18,14 +18,14 @@ type SearchProps = {
 const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) => {
     const { session } = useContext(SpotishareContext)
 
-    const hash = session ? session.hash : ''
-
     const [value, setValue] = useState('')
     const [searchResults, setSearchResults] = useState([])
 
     const search = throttle((text: string) => {
-        searchSong(text, hash)
-            .then(setSearchResults)
+        if (session) {
+            searchSong(text, session.hash)
+                .then(setSearchResults)
+        }
     }, 100)
 
     const onChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -39,12 +39,14 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     }
 
     const onSongClick = (song: Song) => {
-        sendSong(song.id, hash)
-            .then(() => {
-                setValue('')
-                setSearchResults([])
-                onClose()
-            })
+        if (session) {
+            sendSong(song.id, session.hash)
+                .then(() => {
+                    setValue('')
+                    setSearchResults([])
+                    onClose()
+                })
+        }
     }
 
     const onFocus = () => {
@@ -72,4 +74,4 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     )
 }
 
-export default Search
+export default React.memo(Search)
