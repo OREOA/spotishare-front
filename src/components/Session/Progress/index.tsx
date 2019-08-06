@@ -3,8 +3,8 @@ import classNames from 'classnames'
 
 import styles from './progress.module.scss'
 
-type ProgressProps = {
-    progress: number,
+interface ProgressProps {
+    progress: number
     className?: string
 }
 

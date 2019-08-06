@@ -2,20 +2,17 @@ import React from 'react'
 
 import styles from './currentSong.module.scss'
 import { Row, Col } from 'reactstrap'
-import { Song } from '../../../types/song';
+import { Song } from '../../../types/song'
 
-type CurrentSongProps = {
+interface CurrentSongProps {
     song: Song
 }
 
 const CurrentSong: React.FC<CurrentSongProps> = ({ song }) => {
     return (
-        <Row className={styles.currentSong}>
+        <Row>
             <div className={styles.albumImage}>
-                <img
-                    srcSet={song.album.images.reverse().map((a) => `${a.url} ${a.width}w`).join(',')}
-                    src={song.album.images[song.album.images.length - 1].url}
-                />
+                <img src={song.preview_url} alt={`Album: ${song.album.name}`} />
             </div>
             <Col className={styles.info}>
                 <p className={styles.songName}>{song.name}</p>

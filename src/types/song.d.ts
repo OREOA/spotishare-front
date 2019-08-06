@@ -1,20 +1,29 @@
-type Artist = {
-    name: string
-}
+import { Artist } from './artist'
+import { Image } from './image'
+import { SpotifyResource } from './general'
 
-type Image = {
-    width: number
-    height: number
-    url: string
-}
-
-export interface Song {
-    id: string
+interface Album {
     name: string
     artists: Artist[]
-    album: {
-        artists: Artist[]
-        images: Image[]
-    }
+    images: Image[]
+    release_data: string
+    release_date_precision: string
+    total_tracks: number
+}
+
+export interface Song extends SpotifyResource {
+    name: string
+    artists: Artist[]
+    album: Album
     duration_ms: number
+    available_markets: string[]
+    preview_url: string
+    track_number: number
+    disc_number: number
+    explicit: boolean
+    external_ids: {
+        [key: string]: string
+    }
+    is_local: boolean
+    popularity: number
 }

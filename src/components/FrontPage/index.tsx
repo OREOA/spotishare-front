@@ -17,7 +17,7 @@ type FrontPageProps = {
 export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history }) => {
     const { session, ownSession } = useContext(SpotishareContext)
 
-    const onSessionOpen = (hash: Session['hash']) => {
+    const onSessionOpen = (hash: Session['hash']): void => {
         history.push(`/session/${hash}`)
     }
 
@@ -28,7 +28,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history }) =
                 <div className={styles.titleContainer}>
                     <h1>Start playing</h1>
                 </div>
-                <div className={styles.container}>
+                <div>
                     {session && (
                         <div className={styles.section}>
                             <h2 className={styles.title}>Current session</h2>

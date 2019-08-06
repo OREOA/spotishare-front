@@ -12,12 +12,12 @@ const SessionHashInput: React.FC<SessionHashInputProps> = ({ onSend }) => {
     const [value, setValue] = useState('')
     const [focus, setFocus] = useState(false)
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
         onSend(value)
     }
 
-    const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const onChange = (e: React.FormEvent<HTMLInputElement>): void => {
         setValue(e.currentTarget.value)
     }
 
@@ -33,20 +33,14 @@ const SessionHashInput: React.FC<SessionHashInputProps> = ({ onSend }) => {
         <form onSubmit={onSubmit}>
             <div
                 className={classNames(styles.sessionHashInput, {
-                    [styles.focused]: focus || value,
+                    [styles.focused]: focus || value
                 })}
             >
-                <input
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    value={value}
-                    onChange={onChange}
-                    className={styles.input}
-                />
+                <input onFocus={onFocus} onBlur={onBlur} value={value} onChange={onChange} className={styles.input} />
                 <div className={styles.inputPlaceholder}>Session hash</div>
                 <div
                     className={classNames(styles.iconContainer, {
-                        [styles.disabled]: !value,
+                        [styles.disabled]: !value
                     })}
                 >
                     <button className={styles.button} disabled={!value}>

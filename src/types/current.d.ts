@@ -1,6 +1,6 @@
 import { Song } from './song'
 
-export type Current = {
+export interface Current {
     song: Song
     queue: Song[]
     progress: number

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Container } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
@@ -16,46 +16,47 @@ import { getSession } from '../../services/sessionApi'
 const ONE_SECOND = 1000
 
 const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
-    let interval: NodeJS.Timeout
+    const intervalRef = useRef<NodeJS.Timeout>()
     const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
-    const onOpen = () => setSearchOpen(true)
-    const onClose = () => setSearchOpen(false)
-
-    const initCalls = () => {
-        clearInterval(interval)
-        const call = () => {
-            if (session) {
-                getCurrent(session.hash)
-                    .then(setCurrent)
-            }
-        }
-        interval = setInterval(call, ONE_SECOND)
-        call()
-    }
+    const onOpen = (): void => setSearchOpen(true)
+    const onClose = (): void => setSearchOpen(false)
 
     useEffect(() => {
         if (session && session.hash) {
-            initCalls()
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+            const call = (): void => {
+                if (session) {
+                    getCurrent(session.hash).then(setCurrent)
+                }
+            }
+            intervalRef.current = setInterval(call, ONE_SECOND)
+            call()
         }
-    }, [session])
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+        }
+    }, [session, setCurrent])
 
     useEffect(() => {
         const { id } = match.params
         if (id && id !== (session && session.hash)) {
-            getSession(match.params.id)
-                .then(({ data }) => setSession(data))
+            getSession(match.params.id).then((session) => setSession(session))
         }
-    }, [match])
-
-    useEffect(() => () => clearInterval(interval), [])
+    }, [match, session, setSession])
 
     return (
         <React.Fragment>
-            <div className={classNames(styles.sessionContainer, {
-                [styles.searchOpen]: searchOpen
-            })}>
+            <div
+                className={classNames(styles.sessionContainer, {
+                    [styles.searchOpen]: searchOpen
+                })}
+            >
                 <Navbar
                     backButtonPath={!searchOpen ? '/' : undefined}
                     onBackButtonClick={searchOpen ? () => setSearchOpen(false) : undefined}
@@ -74,12 +75,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
                     )}
                 </Container>
                 <Container>
-                    <Search
-                        className={styles.search}
-                        isOpen={searchOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                    />
+                    <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
                 </Container>
             </div>
         </React.Fragment>

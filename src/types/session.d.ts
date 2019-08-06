@@ -1,5 +1,5 @@
 export interface Session {
     // name: string,
-    hash: string,
+    hash: string
     // imageUrl: string,
 }

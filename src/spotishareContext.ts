@@ -1,6 +1,5 @@
 import React from 'react'
 import { Session } from './types/session'
-import { Song } from './types/song'
 import { Current } from './types/current'
 import { User } from './types/user'
 

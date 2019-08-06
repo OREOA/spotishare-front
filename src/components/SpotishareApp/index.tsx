@@ -31,9 +31,12 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         if (typeof localStorage !== 'undefined') {
             if (session) {
-                localStorage.setItem('spotishare', JSON.stringify({
-                    session
-                }))
+                localStorage.setItem(
+                    'spotishare',
+                    JSON.stringify({
+                        session
+                    })
+                )
             }
         }
     }, [session])
@@ -41,8 +44,8 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         setLoading(true)
         getMe()
-            .then(({ data }) => {
-                setUser(data)
+            .then((user) => {
+                setUser(user)
                 setLoading(false)
             })
             .catch(() => {
@@ -50,19 +53,15 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             })
     }, [])
 
-    const onSessionChange = (s: SessionType) => setSession({ ...session, ...s })
-
     useEffect(() => {
-        getOwnSession()
-            .then(({ data }) => setOwnSession(data))
+        getOwnSession().then((session) => setOwnSession(session))
     }, [])
 
-    const onNewSession = () => {
-        createSession()
-            .then(({ data }) => {
-                setOwnSession(data)
-                history.push(`/session/${data.hash}`)
-            })
+    const onNewSession = (): void => {
+        createSession().then((session) => {
+            setOwnSession(session)
+            history.push(`/session/${session.hash}`)
+        })
     }
 
     return loading ? (
@@ -70,12 +69,18 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     ) : !user ? (
         <Login />
     ) : (
-        <SpotishareContext.Provider value={{
-            session, setSession,
-            ownSession, setOwnSession,
-            user, setUser,
-            current, setCurrent
-        }}>
+        <SpotishareContext.Provider
+            value={{
+                session,
+                setSession,
+                ownSession,
+                setOwnSession,
+                user,
+                setUser,
+                current,
+                setCurrent
+            }}
+        >
             <Switch>
                 <Route path="/(session|s)/:id" component={Session} />
                 <Route path="/" component={() => <FrontPage onNewSession={onNewSession} />} />

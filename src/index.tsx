@@ -7,9 +7,7 @@ import './index.scss'
 import SpotishareRouter from './components/SpotishareRouter'
 import * as serviceWorker from './serviceWorker'
 
-const Root = () => (
-  <SpotishareRouter />
-)
+const Root: React.FC = () => <SpotishareRouter />
 
 ReactDOM.render(<Root />, document.getElementById('root'))
 

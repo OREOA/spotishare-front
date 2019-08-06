@@ -5,13 +5,13 @@ import styles from './song.module.scss'
 import { Col, Row } from 'reactstrap'
 import { Song as SongType } from '../../../types/song'
 
-type SongProps = {
-    song: SongType,
-    className?: string,
+interface SongProps {
+    song: SongType
+    className?: string
     onClick: () => void
 }
 
-const Song: React.FC<SongProps> = ({ song: { album, name, artists }, onClick, className }) => (
+const Song: React.FC<SongProps> = ({ song: { album, name, artists, preview_url: previewUrl }, onClick, className }) => (
     <Row
         className={classNames(styles.song, className, {
             [styles.clickable]: !!onClick
@@ -19,10 +19,7 @@ const Song: React.FC<SongProps> = ({ song: { album, name, artists }, onClick, cl
         onClick={onClick}
     >
         <div className={styles.albumImage}>
-            <img
-                srcSet={album.images.reverse().map((a) => `${a.url} ${a.width}w`).join(',')}
-                src={(album.images && album.images.length && album.images[album.images.length - 1].url) || ''}
-            />
+            <img src={previewUrl} alt={`Album: ${album.name}`} />
         </div>
         <Col className={styles.info}>
             <p className={styles.songName}>{name}</p>

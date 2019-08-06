@@ -10,16 +10,10 @@ interface CurrentSessionContainerProps {
 
 const CurrentSessionContainer: React.FC<CurrentSessionContainerProps> = ({ session }) => (
     <Link className={styles.currentSession} to="#">
-        <div className={styles.currentSessionImage}>
-            {/*<img src={session.imageUrl} />*/}
-        </div>
+        <div className={styles.currentSessionImage}>{/*<img src={session.imageUrl} />*/}</div>
         <div className={styles.currentSessionInfo}>
-            <p className={styles.name}>
-                {/*{session.name}*/}
-            </p>
-            <p className={styles.sessionHash}>
-                {session.hash}
-            </p>
+            <p className={styles.name}>{/*{session.name}*/}</p>
+            <p className={styles.sessionHash}>{session.hash}</p>
         </div>
         <div className={styles.iconContainer}>
             <button className={styles.button}>

@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { Session } from '../types/session'
+import { User } from '../types/user'
 
 const apiUrl = `${process.env.REACT_APP_API_URL}/api`
 
-export const getMe = () => axios.get(`${apiUrl}/me/`)
+export const getMe = (): Promise<User> => axios.get(`${apiUrl}/me/`).then(({ data }) => data)
 
-export const getOwnSession = () => axios.get(`${apiUrl}/session/`)
+export const getOwnSession = (): Promise<Session> => axios.get(`${apiUrl}/session/`).then(({ data }) => data)
 
-export const getSession = (hash: Session['hash']) => axios.get(`${apiUrl}/session/${hash}`)
+export const getSession = (hash: Session['hash']): Promise<Session> =>
+    axios.get(`${apiUrl}/session/${hash}`).then(({ data }) => data)
 
-export const createSession = () => axios.post(`${apiUrl}/session/`)
+export const createSession = (): Promise<Session> => axios.post(`${apiUrl}/session/`).then(({ data }) => data)
