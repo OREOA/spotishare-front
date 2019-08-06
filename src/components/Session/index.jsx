@@ -9,13 +9,44 @@ import Queue from './Queue'
 import Search from './Search'
 
 import styles from './session.module.scss'
+import { getCurrent } from '../../services/songApi'
+import { getSession } from '../../services/sessionApi'
 
-const Session = () => {
-    const { current } = useContext(SpotishareContext)
+const ONE_SECOND = 1000
+
+const Session = ({ match }) => {
+    let interval
+    const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
     const onOpen = () => setSearchOpen(true)
     const onClose = () => setSearchOpen(false)
+
+    const initCalls = () => {
+        clearInterval(interval)
+        const call = () => {
+            getCurrent(session.hash)
+                .then(setCurrent)
+        }
+        interval = setInterval(call, ONE_SECOND)
+        call()
+    }
+
+    useEffect(() => {
+        if (session && session.hash) {
+            initCalls()
+        }
+    }, [session])
+
+    useEffect(() => {
+        const { id } = match.params
+        if (id && id !== (session && session.hash)) {
+            getSession(match.params.id)
+                .then(({ data }) => setSession(data))
+        }
+    }, [match])
+
+    useEffect(() => () => clearInterval(interval), [])
 
     return (
         <React.Fragment>
