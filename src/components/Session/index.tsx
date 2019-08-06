@@ -46,7 +46,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     useEffect(() => {
         const { id } = match.params
         if (id && id !== (session && session.hash)) {
-            getSession(match.params.id).then((session) => setSession(session))
+            getSession(match.params.id).then(session => setSession(session))
         }
     }, [match, session, setSession])
 

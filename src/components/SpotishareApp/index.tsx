@@ -44,7 +44,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         setLoading(true)
         getMe()
-            .then((user) => {
+            .then(user => {
                 setUser(user)
                 setLoading(false)
             })
@@ -54,11 +54,11 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     }, [])
 
     useEffect(() => {
-        getOwnSession().then((session) => setOwnSession(session))
+        getOwnSession().then(session => setOwnSession(session))
     }, [])
 
     const onNewSession = (): void => {
-        createSession().then((session) => {
+        createSession().then(session => {
             setOwnSession(session)
             history.push(`/session/${session.hash}`)
         })
