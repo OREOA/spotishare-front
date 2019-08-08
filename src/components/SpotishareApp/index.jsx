@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 import Session from '../Session'
 import FrontPage from '../FrontPage'
 
-import { createSession, getMe, getOwnSession } from '../../services/sessionApi'
+import { createSession, getMe, getOwnSession, deleteSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
 
@@ -59,6 +59,13 @@ const SpotishareApp = ({ history }) => {
             })
     }
 
+    const onDeleteSession = () => {
+        deleteSession()
+            .then(() => {
+                setOwnSession(null)
+            })
+    }
+
     return loading ? (
         <div>Loading...</div>
     ) : !user ? (
@@ -72,7 +79,7 @@ const SpotishareApp = ({ history }) => {
         }}>
             <Switch>
                 <Route path="/(session|s)/:id" component={Session} />
-                <Route path="/" component={() => <FrontPage onNewSession={onNewSession} />} />
+                <Route path="/" component={() => <FrontPage onNewSession={onNewSession} onDeleteSession={onDeleteSession} />} />
             </Switch>
         </SpotishareContext.Provider>
     )

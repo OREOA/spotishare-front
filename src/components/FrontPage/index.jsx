@@ -9,7 +9,7 @@ import SpotishareContext from '../../spotishareContext'
 import { Link } from 'react-router-dom'
 import CurrentSessionContainer from './CurrentSessionContainer'
 
-const FrontPage = ({ onNewSession }) => {
+const FrontPage = ({ onNewSession, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)
 
     return (
@@ -32,9 +32,14 @@ const FrontPage = ({ onNewSession }) => {
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {ownSession && ownSession.hash ? (
-                            <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
-                                Open my session
-                            </Link>
+                            <>
+                                <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
+                                    Open my session
+                                </Link>
+                                <button className={styles.deleteSessionButton} onClick={onDeleteSession}>
+                                    Delete my session
+                                </button>
+                             </>
                         ) : (
                             <button className={styles.newSessionButton} onClick={onNewSession}>
                                 Start a new session
