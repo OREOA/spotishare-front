@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Container } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
@@ -15,27 +15,24 @@ import { getSession } from '../../services/sessionApi'
 const ONE_SECOND = 1000
 
 const Session = ({ match }) => {
-    let interval
+    const intervalRef = useRef()
     const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
     const onOpen = () => setSearchOpen(true)
     const onClose = () => setSearchOpen(false)
 
-    const initCalls = () => {
-        clearInterval(interval)
-        const call = () => {
-            getCurrent(session.hash)
-                .then(setCurrent)
-        }
-        interval = setInterval(call, ONE_SECOND)
-        call()
-    }
-
     useEffect(() => {
         if (session && session.hash) {
-            initCalls()
+            clearInterval(intervalRef.current)
+            const call = () => {
+                getCurrent(session.hash)
+                    .then(setCurrent)
+            }
+            intervalRef.current = setInterval(call, ONE_SECOND)
+            call()
         }
+       return () => clearInterval(intervalRef.current)
     }, [session])
 
     useEffect(() => {
@@ -45,8 +42,6 @@ const Session = ({ match }) => {
                 .then(({ data }) => setSession(data))
         }
     }, [match])
-
-    useEffect(() => () => clearInterval(interval), [])
 
     return (
         <React.Fragment>
