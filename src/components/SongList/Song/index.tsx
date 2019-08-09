@@ -11,7 +11,7 @@ interface SongProps {
     onClick: () => void
 }
 
-const Song: React.FC<SongProps> = ({ song: { album, name, artists, preview_url: previewUrl }, onClick, className }) => (
+const Song: React.FC<SongProps> = ({ song: { album, name, artists }, onClick, className }) => (
     <Row
         className={classNames(styles.song, className, {
             [styles.clickable]: !!onClick
@@ -19,7 +19,7 @@ const Song: React.FC<SongProps> = ({ song: { album, name, artists, preview_url: 
         onClick={onClick}
     >
         <div className={styles.albumImage}>
-            <img src={previewUrl} alt={`Album: ${album.name}`} />
+            <img src={album.images && album.images[album.images.length - 1].url} alt={`Album: ${album.name}`} />
         </div>
         <Col className={styles.info}>
             <p className={styles.songName}>{name}</p>

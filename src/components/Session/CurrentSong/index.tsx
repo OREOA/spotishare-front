@@ -12,7 +12,10 @@ const CurrentSong: React.FC<CurrentSongProps> = ({ song }) => {
     return (
         <Row>
             <div className={styles.albumImage}>
-                <img src={song.preview_url} alt={`Album: ${song.album.name}`} />
+                <img
+                    src={song.album.images && song.album.images[song.album.images.length - 1].url}
+                    alt={`Album: ${song.album.name}`}
+                />
             </div>
             <Col className={styles.info}>
                 <p className={styles.songName}>{song.name}</p>
