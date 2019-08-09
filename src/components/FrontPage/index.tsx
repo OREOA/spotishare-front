@@ -12,9 +12,10 @@ import { Session } from '../../types/session'
 
 type FrontPageProps = {
     onNewSession: () => void
+    onDeleteSession: () => void
 } & RouteComponentProps
 
-export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history }) => {
+export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)
 
     const onSessionOpen = (hash: Session['hash']): void => {
@@ -41,9 +42,14 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history }) =
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {ownSession && ownSession.hash ? (
-                            <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
-                                Open my session
-                            </Link>
+                            <>
+                                <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
+                                    Open my session
+                                </Link>
+                                <button className={styles.deleteSessionButton} onClick={onDeleteSession}>
+                                    Delete my session
+                                </button>
+                            </>
                         ) : (
                             <button className={styles.newSessionButton} onClick={onNewSession}>
                                 Start a new session

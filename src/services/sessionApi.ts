@@ -12,3 +12,5 @@ export const getSession = (hash: Session['hash']): Promise<Session> =>
     axios.get(`${apiUrl}/session/${hash}`).then(({ data }) => data)
 
 export const createSession = (): Promise<Session> => axios.post(`${apiUrl}/session/`).then(({ data }) => data)
+
+export const deleteSession = (): Promise<any> => axios.delete(`${apiUrl}/session/`)
