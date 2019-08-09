@@ -7,6 +7,7 @@ import CurrentSong from './CurrentSong'
 import Progress from './Progress'
 import Queue from './Queue'
 import Search from './Search'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import styles from './session.module.scss'
 import { getCurrent } from '../../services/songApi'
@@ -14,40 +15,48 @@ import { getSession } from '../../services/sessionApi'
 
 const ONE_SECOND = 1000
 
-const Session = ({ match }) => {
-    const intervalRef = useRef()
+const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+    const intervalRef = useRef<NodeJS.Timeout>()
     const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
-    const onOpen = () => setSearchOpen(true)
-    const onClose = () => setSearchOpen(false)
+    const onOpen = (): void => setSearchOpen(true)
+    const onClose = (): void => setSearchOpen(false)
 
     useEffect(() => {
         if (session && session.hash) {
-            clearInterval(intervalRef.current)
-            const call = () => {
-                getCurrent(session.hash)
-                    .then(setCurrent)
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+            const call = (): void => {
+                if (session) {
+                    getCurrent(session.hash).then(setCurrent)
+                }
             }
             intervalRef.current = setInterval(call, ONE_SECOND)
             call()
         }
-       return () => clearInterval(intervalRef.current)
-    }, [session])
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current)
+            }
+        }
+    }, [session, setCurrent])
 
     useEffect(() => {
         const { id } = match.params
         if (id && id !== (session && session.hash)) {
-            getSession(match.params.id)
-                .then(({ data }) => setSession(data))
+            getSession(match.params.id).then(session => setSession(session))
         }
-    }, [match])
+    }, [match, session, setSession])
 
     return (
         <React.Fragment>
-            <div className={classNames(styles.sessionContainer, {
-                [styles.searchOpen]: searchOpen
-            })}>
+            <div
+                className={classNames(styles.sessionContainer, {
+                    [styles.searchOpen]: searchOpen
+                })}
+            >
                 <Navbar
                     backButtonPath={!searchOpen ? '/' : undefined}
                     onBackButtonClick={searchOpen ? () => setSearchOpen(false) : undefined}
@@ -56,7 +65,7 @@ const Session = ({ match }) => {
                     <h1>Now playing</h1>
                     {current && current.song && (
                         <React.Fragment>
-                            <CurrentSong song={current.song} progress={current.progress} />
+                            <CurrentSong song={current.song} />
                             <Progress
                                 progress={current.progress / current.song.duration_ms}
                                 className={styles.progress}
@@ -66,16 +75,11 @@ const Session = ({ match }) => {
                     )}
                 </Container>
                 <Container>
-                    <Search
-                        className={styles.search}
-                        isOpen={searchOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                    />
+                    <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
                 </Container>
             </div>
         </React.Fragment>
     )
 }
 
-export default Session
+export default withRouter(Session)

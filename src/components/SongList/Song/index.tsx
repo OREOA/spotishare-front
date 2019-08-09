@@ -3,19 +3,23 @@ import classNames from 'classnames'
 
 import styles from './song.module.scss'
 import { Col, Row } from 'reactstrap'
+import { Song as SongType } from '../../../types/song'
 
-const Song = ({ song: { album, name, artists }, onClick }) => (
+interface SongProps {
+    song: SongType
+    className?: string
+    onClick: () => void
+}
+
+const Song: React.FC<SongProps> = ({ song: { album, name, artists }, onClick, className }) => (
     <Row
-        className={classNames(styles.song, {
+        className={classNames(styles.song, className, {
             [styles.clickable]: !!onClick
         })}
         onClick={onClick}
     >
         <div className={styles.albumImage}>
-            <img
-                srcSet={album.images.reverse().map((a) => `${a.url} ${a.width}w`)}
-                src={album.images && album.images.length && album.images[album.images.length - 1].url}
-            />
+            <img src={album.images && album.images[album.images.length - 1].url} alt={`Album: ${album.name}`} />
         </div>
         <Col className={styles.info}>
             <p className={styles.songName}>{name}</p>

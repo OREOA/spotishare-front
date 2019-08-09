@@ -6,20 +6,30 @@ import SessionHashInput from './SessionHashInput'
 
 import styles from './frontPage.module.scss'
 import SpotishareContext from '../../spotishareContext'
-import { Link } from 'react-router-dom'
 import CurrentSessionContainer from './CurrentSessionContainer'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { Session } from '../../types/session'
 
-const FrontPage = ({ onNewSession, onDeleteSession }) => {
+type FrontPageProps = {
+    onNewSession: () => void
+    onDeleteSession: () => void
+} & RouteComponentProps
+
+export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)
+
+    const onSessionOpen = (hash: Session['hash']): void => {
+        history.push(`/session/${hash}`)
+    }
 
     return (
         <React.Fragment>
             <Navbar backButton={false} />
-            <Container className={styles.frontPageContainer}>
+            <Container>
                 <div className={styles.titleContainer}>
                     <h1>Start playing</h1>
                 </div>
-                <div className={styles.container}>
+                <div>
                     {session && (
                         <div className={styles.section}>
                             <h2 className={styles.title}>Current session</h2>
@@ -28,7 +38,7 @@ const FrontPage = ({ onNewSession, onDeleteSession }) => {
                     )}
                     <div className={styles.section}>
                         <h2 className={styles.title}>Join a session</h2>
-                        <SessionHashInput />
+                        <SessionHashInput onSend={onSessionOpen} />
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {ownSession && ownSession.hash ? (
@@ -39,7 +49,7 @@ const FrontPage = ({ onNewSession, onDeleteSession }) => {
                                 <button className={styles.deleteSessionButton} onClick={onDeleteSession}>
                                     Delete my session
                                 </button>
-                             </>
+                            </>
                         ) : (
                             <button className={styles.newSessionButton} onClick={onNewSession}>
                                 Start a new session
@@ -52,4 +62,4 @@ const FrontPage = ({ onNewSession, onDeleteSession }) => {
     )
 }
 
-export default React.memo(FrontPage)
+export default React.memo(withRouter(FrontPage))
