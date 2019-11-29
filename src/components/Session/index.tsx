@@ -10,14 +10,14 @@ import Search from './Search'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import styles from './session.module.scss'
-import { getCurrent } from '../../services/songApi'
+import { getCurrent, nextSong } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
 
 const ONE_SECOND = 1000
 
 const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     const intervalRef = useRef<NodeJS.Timeout>()
-    const { current, setCurrent, session, setSession } = useContext(SpotishareContext)
+    const { current, setCurrent, session, setSession, user } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
     const onOpen = (): void => setSearchOpen(true)
@@ -62,9 +62,21 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
                     onBackButtonClick={searchOpen ? () => setSearchOpen(false) : undefined}
                 />
                 <Container className={styles.contentContainer}>
-                    <h1>Now playing</h1>
                     {current && current.song && (
                         <React.Fragment>
+                            <div className={styles.headerContainer}>
+                                <h1>Now playing</h1>
+                            {session && session.owner && user && (
+                                user.id === session.owner.id ||
+                                // remove hardcoded admins when (if) admin page implemented
+                                user.id === 'mungrits' ||
+                                user.id === 'aapzu'
+                                ) && (
+                                <button onClick={() => nextSong(session.hash)} className={styles.skipSongButton}>
+                                Skip 
+                                </button>
+                            )}
+                            </div>
                             <CurrentSong song={current.song} />
                             <Progress
                                 progress={current.progress / current.song.duration_ms}
@@ -72,6 +84,11 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
                             />
                             <Queue queue={current.queue} className={styles.queue} />
                         </React.Fragment>
+                    ) || (
+                        <p>
+                            No session active/no music playing.
+                            Remember to put any song on from Spotify and turn crossfade off :)
+                        </p>
                     )}
                 </Container>
                 <Container>

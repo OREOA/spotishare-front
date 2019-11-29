@@ -32,3 +32,10 @@ export const getCurrent = (session: Session['hash']): Promise<Current> =>
             }
         })
         .then(({ data }) => data)
+
+export const nextSong = (session: Session['hash']): Promise<void> =>
+    axios
+        .post(`${apiUrl}/song/next`, {
+            session
+        })
+        .then(() => undefined)
