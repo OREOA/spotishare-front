@@ -70,7 +70,8 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
                                 user.id === session.owner.id ||
                                 // remove hardcoded admins when (if) admin page implemented
                                 user.id === 'mungrits' ||
-                                user.id === 'aapzu'
+                                user.id === 'aapzu' ||
+                                user.id === 'Ihme.'
                                 ) && (
                                 <button onClick={() => nextSong(session.hash)} className={styles.skipSongButton}>
                                 Skip 
