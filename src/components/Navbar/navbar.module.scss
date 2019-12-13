@@ -18,7 +18,13 @@
 }
 
 .left {
-
+  button {
+    cursor: not-allowed;
+    outline:none;
+    padding: 0;
+    border: none;
+    background: none;
+  }
 }
 
 .right {

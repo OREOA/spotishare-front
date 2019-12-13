@@ -15,7 +15,7 @@ import { getSession } from '../../services/sessionApi'
 
 const ONE_SECOND = 1000
 
-const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history }) => {
     const intervalRef = useRef<NodeJS.Timeout>()
     const { current, setCurrent, session, setSession, user } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
@@ -58,8 +58,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
                 })}
             >
                 <Navbar
-                    backButtonPath={!searchOpen ? '/' : undefined}
-                    onBackButtonClick={searchOpen ? () => setSearchOpen(false) : undefined}
+                    onBackButtonClick={() => searchOpen ? setSearchOpen(false) : history.push('/')}
                 />
                 <Container className={styles.contentContainer}>
                     {current && current.song && (
