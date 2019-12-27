@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useMemo } from "react"
+import React, { useState, useContext, useCallback, useMemo } from 'react'
 import classNames from 'classnames'
 import throttle from 'lodash/throttle'
 import SongList from '../../SongList'
@@ -22,32 +22,41 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     const [value, setValue] = useState('')
     const [searchResults, setSearchResults] = useState<Song[]>([])
 
-    const search = useMemo(() => throttle((text: string) => {
-        if (session) {
-            searchSong(text, session.hash).then(setSearchResults)
-        }
-    }, 100), [session, setSearchResults])
+    const search = useMemo(
+        () =>
+            throttle((text: string) => {
+                if (session) {
+                    searchSong(text, session.hash).then(setSearchResults)
+                }
+            }, 100),
+        [session, setSearchResults]
+    )
 
-    const onChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-        const text = e.currentTarget.value
-        setValue(text)
-        if (text) {
-            search(text)
-        } else {
-            setSearchResults([])
-        }
-    }, [search, setSearchResults])
+    const onChange = useCallback(
+        (e: React.FormEvent<HTMLInputElement>) => {
+            const text = e.currentTarget.value
+            setValue(text)
+            if (text) {
+                search(text)
+            } else {
+                setSearchResults([])
+            }
+        },
+        [search, setSearchResults]
+    )
 
-    const onSongClick = useCallback((song: Song) => {
-        if (session) {
-            sendSong(song.id, session.hash)
-              .then(() => {
-                  setValue('')
-                  setSearchResults([])
-                  onClose()
-              })
-        }
-    }, [setValue, setSearchResults, onClose])
+    const onSongClick = useCallback(
+        (song: Song) => {
+            if (session) {
+                sendSong(song.id, session.hash).then(() => {
+                    setValue('')
+                    setSearchResults([])
+                    onClose()
+                })
+            }
+        },
+        [session, onClose]
+    )
 
     return (
         <React.Fragment>

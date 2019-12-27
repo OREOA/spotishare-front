@@ -24,9 +24,7 @@ const CurrentSessionContainer: React.FC<CurrentSessionContainerProps> = ({ sessi
                 <p className={styles.name} title={displayName ? username : undefined}>
                     {displayName || username}
                 </p>
-                <p className={styles.sessionHash}>
-                  {session.hash}
-                </p>
+                <p className={styles.sessionHash}>{session.hash}</p>
             </div>
             <div className={styles.iconContainer}>
                 <button className={styles.button}>

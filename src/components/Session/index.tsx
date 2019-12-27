@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef, useCallback } from "react"
+import React, { useContext, useState, useEffect, useRef, useCallback } from 'react'
 import { Col, Container, Row } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
