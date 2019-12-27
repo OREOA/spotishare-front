@@ -1,5 +1,6 @@
 .navbar {
   height: 84px;
+  flex-shrink: 0;
 
   :global(.container),
   .left,

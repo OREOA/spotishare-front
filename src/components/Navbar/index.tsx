@@ -3,9 +3,11 @@ import React from 'react'
 import styles from './navbar.module.scss'
 import { Container } from 'reactstrap'
 import Logo from '../Logo'
+import { Link } from 'react-router-dom'
 
 interface NavbarProps {
     backButton?: boolean
+    backButtonPath?: string
     onBackButtonClick?: () => void
 }
 
@@ -30,14 +32,14 @@ const BackIcon: React.FC = () => (
     </svg>
 )
 
-const Navbar: React.FC<NavbarProps> = ({ backButton = true, onBackButtonClick }) => (
+const Navbar: React.FC<NavbarProps> = ({ backButton = true, backButtonPath, onBackButtonClick }) => (
     <nav className={styles.navbar}>
         <Container>
             <div className={styles.left}>
                 {backButton && (
-                    <button onClick={onBackButtonClick}>
+                    <Link to={backButtonPath || ''} onClick={onBackButtonClick}>
                         <BackIcon />
-                    </button>
+                    </Link>
                 )}
             </div>
             <div className={styles.center}>

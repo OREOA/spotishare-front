@@ -22,6 +22,13 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
         history.push(`/session/${hash}`)
     }
 
+    const onDeleteSessionClick = (): void => {
+        // TODO: make better
+        if (window.confirm('Really?')) {
+            onDeleteSession()
+        }
+    }
+
     return (
         <React.Fragment>
             <Navbar backButton={false} />
@@ -46,7 +53,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                                 <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
                                     Open my session
                                 </Link>
-                                <button className={styles.deleteSessionButton} onClick={onDeleteSession}>
+                                <button className={styles.deleteSessionButton} onClick={onDeleteSessionClick}>
                                     Delete my session
                                 </button>
                             </>

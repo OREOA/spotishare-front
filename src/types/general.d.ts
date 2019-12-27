@@ -1,4 +1,4 @@
-export interface SpotifyResource {
+export interface SpotifyResource<T extends string> {
     id: string
     href: string
     uri: string
@@ -6,5 +6,5 @@ export interface SpotifyResource {
         spotify?: string
         [key: string]: string
     }
-    type: 'track' | 'album' | 'artist'
+    type: T
 }

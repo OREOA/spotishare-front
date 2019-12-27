@@ -7,6 +7,7 @@ import styles from './search.module.scss'
 import { sendSong, searchSong } from '../../../services/songApi'
 import SpotishareContext from '../../../spotishareContext'
 import { Song } from '../../../types/song'
+import { Container } from 'reactstrap'
 
 interface SearchProps {
     isOpen: boolean
@@ -52,22 +53,28 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     }
 
     return (
-        <div
-            className={classNames(styles.searchContainer, className, {
-                [styles.active]: isOpen
-            })}
-        >
-            <input
-                value={value}
-                onFocus={onFocus}
-                className={styles.input}
-                onChange={onChange}
-                placeholder="Search for a song"
-            />
-            <div className={styles.searchResultContainer}>
+        <React.Fragment>
+            <Container
+                className={classNames(styles.container, className, {
+                    [styles.active]: isOpen
+                })}
+            >
+                <input
+                    value={value}
+                    onFocus={onFocus}
+                    className={styles.input}
+                    onChange={onChange}
+                    placeholder="Search for a song"
+                />
+            </Container>
+            <Container
+                className={classNames(styles.searchResultContainer, {
+                    [styles.active]: isOpen
+                })}
+            >
                 <SongList songs={searchResults} onSongClick={onSongClick} />
-            </div>
-        </div>
+            </Container>
+        </React.Fragment>
     )
 }
 

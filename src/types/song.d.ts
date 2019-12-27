@@ -2,7 +2,7 @@ import { Artist } from './artist'
 import { Image } from './image'
 import { SpotifyResource } from './general'
 
-interface Album {
+interface Album extends SpotifyResource<'album'> {
     name: string
     artists: Artist[]
     images: Image[]
@@ -11,7 +11,7 @@ interface Album {
     total_tracks: number
 }
 
-export interface Song extends SpotifyResource {
+export interface Song extends SpotifyResource<'song'> {
     name: string
     artists: Artist[]
     album: Album

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { Container } from 'reactstrap'
+import { Col, Container, Row } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
 import Navbar from '../Navbar'
@@ -8,10 +8,10 @@ import Progress from './Progress'
 import Queue from './Queue'
 import Search from './Search'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-
-import styles from './session.module.scss'
 import { getCurrent, nextSong } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
+
+import styles from './session.module.scss'
 
 const ONE_SECOND = 1000
 
@@ -57,8 +57,12 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                     [styles.searchOpen]: searchOpen
                 })}
             >
-                <Navbar onBackButtonClick={() => (searchOpen ? setSearchOpen(false) : history.push('/'))} />
+                <Navbar
+                    backButtonPath={!searchOpen ? '/' : match.url}
+                    onBackButtonClick={searchOpen ? onClose : undefined}
+                />
                 <Container className={styles.contentContainer}>
+                    <h1>Now playing</h1>
                     {(current && current.song && (
                         <React.Fragment>
                             <div className={styles.headerContainer}>
@@ -80,10 +84,14 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                     )}
                             </div>
                             <CurrentSong song={current.song} />
-                            <Progress
-                                progress={current.progress / current.song.duration_ms}
-                                className={styles.progress}
-                            />
+                            <Row>
+                                <Col xs={12}>
+                                    <Progress
+                                        progress={current.song && current.progress / current.song.duration_ms}
+                                        className={styles.progress}
+                                    />
+                                </Col>
+                            </Row>
                             <Queue queue={current.queue} className={styles.queue} />
                         </React.Fragment>
                     )) || (

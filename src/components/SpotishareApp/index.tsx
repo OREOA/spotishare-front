@@ -67,10 +67,14 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     }, [setOwnSession, history])
 
     const onDeleteSession = useCallback(() => {
+        const ownSessionOpen = session && ownSession && session.hash === ownSession.hash
         deleteSession().then(() => {
             setOwnSession(null)
+            if (ownSessionOpen) {
+                setSession(null)
+            }
         })
-    }, [setOwnSession])
+    }, [ownSession, session])
 
     return loading ? (
         <div>Loading...</div>
