@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef, useCallback } from "react"
 import { Col, Container, Row } from 'reactstrap'
 import classNames from 'classnames'
 import SpotishareContext from '../../spotishareContext'
@@ -20,8 +20,8 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
     const { current, setCurrent, session, setSession, user } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
 
-    const onOpen = (): void => setSearchOpen(true)
-    const onClose = (): void => setSearchOpen(false)
+    const onOpen = useCallback(() => setSearchOpen(true), [setSearchOpen])
+    const onClose = useCallback(() => setSearchOpen(false), [setSearchOpen])
 
     useEffect(() => {
         if (session && session.hash) {
@@ -62,11 +62,10 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                     onBackButtonClick={searchOpen ? onClose : undefined}
                 />
                 <Container className={styles.contentContainer}>
-                    <h1>Now playing</h1>
                     {(current && current.song && (
                         <React.Fragment>
                             <div className={styles.headerContainer}>
-                                <h1>Now playing</h1>
+                                <h1 className={styles.title}>Now playing</h1>
                                 {session &&
                                     session.owner &&
                                     user &&
@@ -101,9 +100,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                         </p>
                     )}
                 </Container>
-                <Container>
-                    <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
-                </Container>
+                <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
             </div>
         </React.Fragment>
     )

@@ -1,5 +1,15 @@
 $search-transition: all 0.3s ease-in;
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0;
+  h1 {
+    margin: 0;
+  }
+}
+
 .sessionContainer {
   display: flex;
   flex-direction: column;
@@ -10,6 +20,32 @@ $search-transition: all 0.3s ease-in;
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+    transition: $search-transition;
+    height: 100%;
+  }
+
+  &.searchOpen {
+    .contentContainer {
+      flex: 0;
+      height: 0;
+    }
+
+    .searchContainer {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+  }
+
+  &:not(.searchOpen) {
+    .searchContainer {
+      flex-grow: 0;
+      animation: position 0s;
+      animation-delay: 0.1s;
+      animation-fill-mode: forwards;
+    }
   }
 }
 
@@ -27,39 +63,10 @@ $search-transition: all 0.3s ease-in;
   }
 }
 
-.sessionContainer.searchOpen {
-  .contentContainer {
-    flex: 0;
-    height: 0;
-  }
-
-  .searchContainer {
-    width: 100%;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-}
-
-.sessionContainer:not(.searchOpen) {
-  .searchContainer {
-    flex-grow: 0;
-    animation: position 0s;
-    animation-delay: 0.3s;
-    animation-fill-mode: forwards;
-  }
-}
-
 .searchContainer {
   z-index: 2;
   width: 100%;
   transition: flex-grow 0.3s, height 0.3s;
-}
-
-.contentContainer {
-  transition: $search-transition;
-  height: 100%;
 }
 
 .progress,
@@ -73,6 +80,28 @@ $search-transition: all 0.3s ease-in;
 
 .search {
   width: 100%;
+}
+
+.searchBarOpen {
+  flex: 1;
+}
+
+.skipSongButton {
+  background-color: #B21ED7;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  height: 36px;
+  border-radius: 18px;
+  padding-left: 32px;
+  padding-right: 32px;
+  outline: none;
+  box-shadow: none;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
 }
 
 @keyframes position {

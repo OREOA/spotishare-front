@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from "react"
 import classNames from 'classnames'
 import { Container } from 'reactstrap'
 import Navbar from '../Navbar'
@@ -18,16 +18,16 @@ interface FrontPageProps extends RouteComponentProps {
 export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)
 
-    const onSessionOpen = (hash: Session['hash']): void => {
+    const onSessionOpen = useCallback((hash: Session['hash']) => {
         history.push(`/session/${hash}`)
-    }
+    }, [history])
 
-    const onDeleteSessionClick = (): void => {
+    const onDeleteSessionClick = useCallback(() => {
         // TODO: make better
         if (window.confirm('Really?')) {
             onDeleteSession()
         }
-    }
+    }, [onDeleteSession])
 
     return (
         <React.Fragment>
