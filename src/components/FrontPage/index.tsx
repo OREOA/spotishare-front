@@ -10,10 +10,10 @@ import CurrentSessionContainer from './CurrentSessionContainer'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Session } from '../../types/session'
 
-type FrontPageProps = {
+interface FrontPageProps extends RouteComponentProps {
     onNewSession: () => void
     onDeleteSession: () => void
-} & RouteComponentProps
+}
 
 export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)

@@ -61,7 +61,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                     onBackButtonClick={() => searchOpen ? setSearchOpen(false) : history.push('/')}
                 />
                 <Container className={styles.contentContainer}>
-                    {current && current.song && (
+                    {(current && current.song && (
                         <React.Fragment>
                             <div className={styles.headerContainer}>
                                 <h1>Now playing</h1>
@@ -71,7 +71,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                 user.id === 'mungrits' ||
                                 user.id === 'aapzu' ||
                                 user.id === 'ihme.'
-                                ) && (
+                            ) && (
                                 <button onClick={() => nextSong(session.hash)} className={styles.skipSongButton}>
                                 Skip 
                                 </button>
@@ -84,7 +84,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                             />
                             <Queue queue={current.queue} className={styles.queue} />
                         </React.Fragment>
-                    ) || (
+                    )) || (
                         <p>
                             No session active/no music playing.
                             Remember to put any song on from Spotify and turn crossfade off :)

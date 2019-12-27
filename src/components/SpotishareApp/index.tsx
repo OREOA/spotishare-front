@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from "react"
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom'
 
 import Session from '../Session'
 import FrontPage from '../FrontPage'
 
-import { createSession, getMe, getOwnSession, deleteSession } from '../../services/sessionApi'
+import { createSession, getMe, getOwnSession, deleteSession, getSession } from "../../services/sessionApi"
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
 import { Session as SessionType } from '../../types/session'
@@ -23,20 +23,19 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             const raw = localStorage.getItem('spotishare')
             const data = raw && JSON.parse(raw)
             if (data && data.session) {
-                setSession(data.session)
+                getSession(data.session.hash)
+                  .then(setSession)
+                  .catch(() => undefined)
             }
         }
-    }, [])
+    }, [setSession])
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') {
             if (session) {
-                localStorage.setItem(
-                    'spotishare',
-                    JSON.stringify({
-                        session
-                    })
-                )
+                localStorage.setItem('spotishare', JSON.stringify({
+                    session
+                }))
             }
         }
     }, [session])
@@ -51,24 +50,24 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             .catch(() => {
                 setLoading(false)
             })
-    }, [])
+    }, [setLoading, setUser])
 
     useEffect(() => {
-        getOwnSession().then(session => setOwnSession(session))
-    }, [])
+        getOwnSession().then(s => setOwnSession(s))
+    }, [setOwnSession])
 
-    const onNewSession = (): void => {
-        createSession().then(session => {
-            setOwnSession(session)
-            history.push(`/session/${session.hash}`)
+    const onNewSession = useCallback(() => {
+        createSession().then(s => {
+            setOwnSession(s)
+            history.push(`/session/${s.hash}`)
         })
-    }
+    }, [setOwnSession, history])
 
-    const onDeleteSession = (): void => {
+    const onDeleteSession = useCallback(() => {
         deleteSession().then(() => {
             setOwnSession(null)
         })
-    }
+    }, [setOwnSession])
 
     return loading ? (
         <div>Loading...</div>
