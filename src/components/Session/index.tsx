@@ -57,25 +57,27 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                     [styles.searchOpen]: searchOpen
                 })}
             >
-                <Navbar
-                    onBackButtonClick={() => searchOpen ? setSearchOpen(false) : history.push('/')}
-                />
+                <Navbar onBackButtonClick={() => (searchOpen ? setSearchOpen(false) : history.push('/'))} />
                 <Container className={styles.contentContainer}>
                     {(current && current.song && (
                         <React.Fragment>
                             <div className={styles.headerContainer}>
                                 <h1>Now playing</h1>
-                            {session && session.owner && user && (
-                                user.id === session.owner.id ||
-                                // remove hardcoded admins when (if) admin page implemented
-                                user.id === 'mungrits' ||
-                                user.id === 'aapzu' ||
-                                user.id === 'ihme.'
-                            ) && (
-                                <button onClick={() => nextSong(session.hash)} className={styles.skipSongButton}>
-                                Skip 
-                                </button>
-                            )}
+                                {session &&
+                                    session.owner &&
+                                    user &&
+                                    (user.id === session.owner.id ||
+                                        // remove hardcoded admins when (if) admin page implemented
+                                        user.id === 'mungrits' ||
+                                        user.id === 'aapzu' ||
+                                        user.id === 'ihme.') && (
+                                        <button
+                                            onClick={() => nextSong(session.hash)}
+                                            className={styles.skipSongButton}
+                                        >
+                                            Skip
+                                        </button>
+                                    )}
                             </div>
                             <CurrentSong song={current.song} />
                             <Progress
@@ -86,8 +88,8 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                         </React.Fragment>
                     )) || (
                         <p>
-                            No session active/no music playing.
-                            Remember to put any song on from Spotify and turn crossfade off :)
+                            No session active/no music playing. Remember to put any song on from Spotify and turn
+                            crossfade off :)
                         </p>
                     )}
                 </Container>

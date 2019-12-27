@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback } from 'react'
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom'
 
 import Session from '../Session'
 import FrontPage from '../FrontPage'
 
-import { createSession, getMe, getOwnSession, deleteSession, getSession } from "../../services/sessionApi"
+import { createSession, getMe, getOwnSession, deleteSession, getSession } from '../../services/sessionApi'
 import Login from '../Login'
 import SpotishareContext from '../../spotishareContext'
 import { Session as SessionType } from '../../types/session'
@@ -24,8 +24,8 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             const data = raw && JSON.parse(raw)
             if (data && data.session) {
                 getSession(data.session.hash)
-                  .then(setSession)
-                  .catch(() => undefined)
+                    .then(setSession)
+                    .catch(() => undefined)
             }
         }
     }, [setSession])
@@ -33,9 +33,12 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         if (typeof localStorage !== 'undefined') {
             if (session) {
-                localStorage.setItem('spotishare', JSON.stringify({
-                    session
-                }))
+                localStorage.setItem(
+                    'spotishare',
+                    JSON.stringify({
+                        session
+                    })
+                )
             }
         }
     }, [session])
