@@ -7,9 +7,10 @@ import { Song } from '../../../types/song'
 import { Col, Row } from 'reactstrap'
 import { sendVote } from '../../../services/songApi'
 import SpotishareContext from '../../../spotishareContext'
+import { SongQueueItem } from '../../../types/songQueueItem'
 
 interface QueueProps {
-    queue: Song[]
+    queue: SongQueueItem[]
     className?: string
 }
 
@@ -25,7 +26,15 @@ const Queue: React.FC<QueueProps> = ({ queue, className }) => {
     return (
         <Row className={classNames(styles.row, className)}>
             <Col className={styles.col}>
-                <SongList className={styles.songList} songs={queue} onSongClick={onSongClick} />
+                <SongList
+                    className={styles.songList}
+                    songs={queue.map(song => song.songObject)}
+                    votes={queue.map(song => ({
+                        songId: song.songObject.id,
+                        votes: song.votes
+                    }))}
+                    onSongClick={onSongClick}
+                />
             </Col>
         </Row>
     )
