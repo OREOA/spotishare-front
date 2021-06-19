@@ -46,3 +46,10 @@ export const nextSong = (session: Session['hash']): Promise<void> =>
             session
         })
         .then(() => undefined)
+
+export const addRecommendation = (session: Session['hash']): Promise<void> =>
+    axios
+        .post(`${apiUrl}/song/recommendation`, {
+            session
+        })
+        .then(() => undefined)
