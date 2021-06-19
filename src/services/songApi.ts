@@ -13,6 +13,13 @@ export const sendSong = (songId: Song['id'], session: Session['hash']): Promise<
         })
         .then(() => undefined)
 
+export const sendVote = (songId: Song['id'], session: Session['hash']): Promise<void> =>
+    axios
+        .post(`${apiUrl}/song/${songId}/vote`, {
+            session
+        })
+        .then(() => undefined)
+
 export const searchSong = (searchQuery: string, session: Session['hash']): Promise<Song[]> => {
     return axios
         .get(`${apiUrl}/search`, {
