@@ -12,6 +12,7 @@ import { getCurrent, nextSong } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
 
 import styles from './session.module.scss'
+import Button from '../Button'
 
 const ONE_SECOND = 1000
 
@@ -74,12 +75,9 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                         user.id === 'mungrits' ||
                                         user.id === 'aapzu' ||
                                         user.id === 'ihme.') && (
-                                        <button
-                                            onClick={() => nextSong(session.hash)}
-                                            className={styles.skipSongButton}
-                                        >
+                                        <Button style="purple" onClick={() => nextSong(session.hash)}>
                                             Skip
-                                        </button>
+                                        </Button>
                                     )}
                             </div>
                             <CurrentSong song={current.song} />

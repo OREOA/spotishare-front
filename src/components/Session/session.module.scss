@@ -86,24 +86,6 @@ $search-transition: all 0.3s ease-in;
   flex: 1;
 }
 
-.skipSongButton {
-  background-color: #B21ED7;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-  height: 36px;
-  border-radius: 18px;
-  padding-left: 32px;
-  padding-right: 32px;
-  outline: none;
-  box-shadow: none;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-}
-
 @keyframes position {
   from {
     position: relative;

@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Container } from 'reactstrap'
 import Navbar from '../Navbar'
 import SessionHashInput from './SessionHashInput'
+import Button from '../Button'
 
 import styles from './frontPage.module.scss'
 import SpotishareContext from '../../spotishareContext'
@@ -53,17 +54,17 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
                         {ownSession && ownSession.hash ? (
                             <>
-                                <Link to={`/session/${ownSession.hash}`} className={styles.newSessionButton}>
-                                    Open my session
+                                <Link to={`/session/${ownSession.hash}`}>
+                                    <Button style="purple">Open my session</Button>
                                 </Link>
-                                <button className={styles.deleteSessionButton} onClick={onDeleteSessionClick}>
+                                <Button style="red" onClick={onDeleteSessionClick}>
                                     Delete my session
-                                </button>
+                                </Button>
                             </>
                         ) : (
-                            <button className={styles.newSessionButton} onClick={onNewSession}>
+                            <Button style="purple" onClick={onNewSession}>
                                 Start a new session
-                            </button>
+                            </Button>
                         )}
                     </div>
                 </div>

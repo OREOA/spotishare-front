@@ -18,7 +18,7 @@ const CurrentSessionContainer: React.FC<CurrentSessionContainerProps> = ({ sessi
     return (
         <Link className={styles.currentSession} to={`session/${session.hash}`}>
             <div className={styles.currentSessionImage}>
-                <img src={imageUrl} alt={username} />
+                <img src={imageUrl || 'https://i.pravatar.cc/50'} alt={username} />
             </div>
             <div className={styles.currentSessionInfo}>
                 <p className={styles.name} title={displayName ? username : undefined}>
