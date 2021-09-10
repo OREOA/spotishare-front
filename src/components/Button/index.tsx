@@ -3,12 +3,12 @@ import React from 'react'
 import styles from './button.module.scss'
 
 interface NavbarProps {
-    style: string
+    color: string
     onClick?: () => void
 }
 
-const Button: React.FC<NavbarProps> = ({ style, onClick, children }) => {
-    const className = classNames(styles.btn, styles[style])
+const Button: React.FC<NavbarProps> = ({ color, onClick, children }) => {
+    const className = classNames(styles.btn, styles[color])
     return (
         <button className={className} onClick={onClick}>
             {children}

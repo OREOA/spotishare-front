@@ -55,14 +55,14 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                         {ownSession && ownSession.hash ? (
                             <>
                                 <Link to={`/session/${ownSession.hash}`}>
-                                    <Button style="purple">Open my session</Button>
+                                    <Button color="purple">Open my session</Button>
                                 </Link>
-                                <Button style="red" onClick={onDeleteSessionClick}>
+                                <Button color="red" onClick={onDeleteSessionClick}>
                                     Delete my session
                                 </Button>
                             </>
                         ) : (
-                            <Button style="purple" onClick={onNewSession}>
+                            <Button color="purple" onClick={onNewSession}>
                                 Start a new session
                             </Button>
                         )}

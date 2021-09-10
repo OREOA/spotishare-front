@@ -75,7 +75,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                         user.id === 'mungrits' ||
                                         user.id === 'aapzu' ||
                                         user.id === 'ihme.') && (
-                                        <Button style="purple" onClick={() => nextSong(session.hash)}>
+                                        <Button color="purple" onClick={() => nextSong(session.hash)}>
                                             Skip
                                         </Button>
                                     )}
