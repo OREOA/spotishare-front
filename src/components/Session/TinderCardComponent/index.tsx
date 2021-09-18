@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import TinderCard from 'react-tinder-card'
 import { Container } from 'reactstrap'
-import { getRecommendation, sendSong } from '../../../services/songApi'
+import { getRecommendation, sendSong, sendVote } from '../../../services/songApi'
 import SpotishareContext from '../../../spotishareContext'
 import { Song } from '../../../types/song'
 import CurrentSong from '../CurrentSong'
@@ -23,7 +23,8 @@ const TinderCardComponent = () => {
                     }
                     return data
                 })
-            })
+            return data
+            }).then(data => sendVote(data.id, session.hash))
     }
 
     return (
