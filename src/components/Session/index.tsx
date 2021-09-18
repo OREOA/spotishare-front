@@ -79,18 +79,9 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                             <Button color="purple" onClick={() => nextSong(session.hash)}>
                                                 Skip
                                             </Button>
-                                            <button
-                                                onClick={() => nextSong(session.hash)}
-                                                className={styles.skipSongButton}
-                                            >
-                                                Skip
-                                            </button>
-                                            <button
-                                                onClick={() => addRecommendation(session.hash)}
-                                                className={styles.skipSongButton}
-                                            >
-                                                add
-                                            </button>
+                                            <Button color="purple" onClick={() => addRecommendation(session.hash)}>
+                                                Add
+                                            </Button>
                                         </>
                                     )}
                             </div>
