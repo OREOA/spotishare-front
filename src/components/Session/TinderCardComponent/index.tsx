@@ -9,11 +9,10 @@ import CurrentSong from '../CurrentSong'
 const TinderCardComponent = () => {
     const { session } = useContext(SpotishareContext)
     const [voteSong, setVoteSong] = useState<Song | null>(null)
-    const [testi, setTesti] = useState(0)
 
     useEffect(() => {
         session && getRecommendation(session.hash).then(data => setVoteSong(data))
-    }, [])
+    }, [session])
 
     const onSwipe = (direction: string) => {
         session &&
