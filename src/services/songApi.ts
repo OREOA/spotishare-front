@@ -53,3 +53,10 @@ export const addRecommendation = (session: Session['hash']): Promise<void> =>
             session
         })
         .then(() => undefined)
+
+export const getRecommendation = (session: Session['hash']): Promise<Song> =>
+    axios
+        .get(`${apiUrl}/song/recommendation`, {
+            params: { session }
+        })
+        .then(({ data }) => data)

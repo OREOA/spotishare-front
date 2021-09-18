@@ -13,6 +13,7 @@ import { getSession } from '../../services/sessionApi'
 
 import styles from './session.module.scss'
 import Button from '../Button'
+import TinderCardComponent from './TinderCardComponent/index'
 
 const ONE_SECOND = 1000
 
@@ -50,7 +51,6 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
             getSession(match.params.id).then(session => setSession(session))
         }
     }, [match, session, setSession])
-
     return (
         <React.Fragment>
             <div
@@ -65,6 +65,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                 <Container className={styles.contentContainer}>
                     {(current && current.song && (
                         <React.Fragment>
+                            <TinderCardComponent />
                             <div className={styles.headerContainer}>
                                 <h1 className={styles.title}>Now playing</h1>
                                 {session &&
