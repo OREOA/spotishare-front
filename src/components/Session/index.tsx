@@ -8,7 +8,7 @@ import Progress from './Progress'
 import Queue from './Queue'
 import Search from './Search'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { getCurrent, nextSong } from '../../services/songApi'
+import { getCurrent, nextSong, addRecommendation } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
 
 import styles from './session.module.scss'
@@ -75,9 +75,23 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                         user.id === 'mungrits' ||
                                         user.id === 'aapzu' ||
                                         user.id === 'ihme.') && (
-                                        <Button color="purple" onClick={() => nextSong(session.hash)}>
-                                            Skip
-                                        </Button>
+                                        <>
+                                            <Button color="purple" onClick={() => nextSong(session.hash)}>
+                                                Skip
+                                            </Button>
+                                            <button
+                                                onClick={() => nextSong(session.hash)}
+                                                className={styles.skipSongButton}
+                                            >
+                                                Skip
+                                            </button>
+                                            <button
+                                                onClick={() => addRecommendation(session.hash)}
+                                                className={styles.skipSongButton}
+                                            >
+                                                add
+                                            </button>
+                                        </>
                                     )}
                             </div>
                             <CurrentSong song={current.song} />
