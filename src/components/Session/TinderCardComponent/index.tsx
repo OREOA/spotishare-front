@@ -16,15 +16,21 @@ const TinderCardComponent = () => {
 
     const onSwipe = (direction: string) => {
         session &&
-            getRecommendation(session.hash).then(data => {
-                setVoteSong(voteSong => {
-                    if (direction === 'right') {
-                        voteSong && session && sendSong(voteSong.id, session.hash)
-                    }
+            getRecommendation(session.hash)
+                .then(data => {
+                    setVoteSong(voteSong => {
+                        if (direction === 'right') {
+                            voteSong && session && sendSong(voteSong.id, session.hash)
+                        }
+                        return data
+                    })
                     return data
                 })
-            return data
-            }).then(data => data?.id && sendVote(data.id, session.hash))
+                .then(data => {
+                    if (data && data.id) {
+                        sendVote(data.id, session.hash)
+                    }
+                })
     }
 
     return (
