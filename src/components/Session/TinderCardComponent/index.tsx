@@ -24,7 +24,7 @@ const TinderCardComponent = () => {
                     return data
                 })
             return data
-            }).then(data => sendVote(data.id, session.hash))
+            }).then(data => data?.id && sendVote(data.id, session.hash))
     }
 
     return (
