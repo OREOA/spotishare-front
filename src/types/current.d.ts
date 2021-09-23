@@ -3,6 +3,6 @@ import { SongQueueItem } from './songQueueItem'
 
 export interface Current {
     song: Song
-    queue: SongQueueItem[]
+    queue: Song[]
     progress: number
 }

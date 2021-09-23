@@ -90,7 +90,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                             <Row>
                                 <Col xs={12}>
                                     <Progress
-                                        progress={current.song && current.progress / current.song.duration_ms}
+                                        progress={current.song && current.progress / current.song.duration}
                                         className={styles.progress}
                                     />
                                 </Col>

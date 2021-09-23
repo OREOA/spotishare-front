@@ -1,5 +1,3 @@
-import { SpotifyResource } from './general'
-
-export interface Artist extends SpotifyResource {
+export interface Artist {
     name: string
 }

@@ -48,7 +48,7 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     const onSongClick = useCallback(
         (song: Song) => {
             if (session) {
-                sendSong(song.id, session.hash).then(() => {
+                sendSong(song.songId, session.hash).then(() => {
                     setValue('')
                     setSearchResults([])
                     onClose()

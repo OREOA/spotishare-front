@@ -5,7 +5,7 @@ import { Current } from '../types/current'
 
 const apiUrl = `${process.env.REACT_APP_API_URL}/api`
 
-export const sendSong = (songId: Song['id'], session: Session['hash']): Promise<void> =>
+export const sendSong = (songId: Song['songId'], session: Session['hash']): Promise<void> =>
     axios
         .post(`${apiUrl}/song`, {
             songId,
@@ -13,7 +13,7 @@ export const sendSong = (songId: Song['id'], session: Session['hash']): Promise<
         })
         .then(() => undefined)
 
-export const sendVote = (songId: Song['id'], session: Session['hash']): Promise<void> =>
+export const sendVote = (songId: Song['songId'], session: Session['hash']): Promise<void> =>
     axios
         .post(`${apiUrl}/song/${songId}/vote`, {
             session
@@ -28,7 +28,7 @@ export const searchSong = (searchQuery: string, session: Session['hash']): Promi
                 session
             }
         })
-        .then(response => (response.data.body && response.data.body.tracks && response.data.body.tracks.items) || [])
+        .then(response => response.data)
 }
 
 export const getCurrent = (session: Session['hash']): Promise<Current> =>

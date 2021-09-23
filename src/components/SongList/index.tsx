@@ -4,15 +4,13 @@ import classNames from 'classnames'
 
 import styles from './songList.module.scss'
 import { Song as SongType } from '../../types/song'
-import { VoteHack } from '../../types/voteHack'
 interface SongListProps {
     songs: SongType[]
-    votes?: VoteHack[]
     onSongClick: (song: SongType) => void
     className?: string
 }
 
-const SongList: React.FC<SongListProps> = ({ songs, votes, onSongClick, className }) => {
+const SongList: React.FC<SongListProps> = ({ songs, onSongClick, className }) => {
     return (
         <div className={classNames(styles.songList, className)}>
             {songs &&
@@ -20,8 +18,7 @@ const SongList: React.FC<SongListProps> = ({ songs, votes, onSongClick, classNam
                     <Song
                         song={song}
                         className={styles.song}
-                        key={song.id}
-                        votes={votes && votes.find(vote => vote.songId === song.id)}
+                        key={song.songId}
                         onClick={() => onSongClick(song)}
                     />
                 ))}

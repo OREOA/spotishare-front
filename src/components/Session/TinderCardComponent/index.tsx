@@ -20,15 +20,15 @@ const TinderCardComponent = () => {
                 .then(data => {
                     setVoteSong(voteSong => {
                         if (direction === 'right') {
-                            voteSong && session && sendSong(voteSong.id, session.hash)
+                            voteSong && session && sendSong(voteSong.songId, session.hash)
                         }
                         return data
                     })
                     return data
                 })
                 .then(data => {
-                    if (data && data.id) {
-                        sendVote(data.id, session.hash)
+                    if (data && data.songId) {
+                        sendVote(data.songId, session.hash)
                     }
                 })
     }
