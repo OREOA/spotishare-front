@@ -73,6 +73,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             if (ownSessionOpen) {
                 setSession(null)
             }
+            localStorage.removeItem('spotishare')
         })
     }, [ownSession, session])
 
