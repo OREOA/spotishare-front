@@ -15,12 +15,7 @@ const SongList: React.FC<SongListProps> = ({ songs, onSongClick, className }) =>
         <div className={classNames(styles.songList, className)}>
             {songs &&
                 songs.map(song => (
-                    <Song
-                        song={song}
-                        className={styles.song}
-                        key={song.songId}
-                        onClick={() => onSongClick(song)}
-                    />
+                    <Song song={song} className={styles.song} key={song.songId} onClick={() => onSongClick(song)} />
                 ))}
         </div>
     )

@@ -5,22 +5,22 @@ import { Current } from '../types/current'
 
 const apiUrl = `${process.env.REACT_APP_API_URL}/api`
 
-export const sendSong = (songId: Song['songId'], session: Session['hash']): Promise<void> =>
+export const sendSong = (songId: Song['songId'], session: Session['id']): Promise<Song> =>
     axios
         .post(`${apiUrl}/song`, {
             songId,
             session
         })
-        .then(() => undefined)
+        .then(response => response.data)
 
-export const sendVote = (songId: Song['songId'], session: Session['hash']): Promise<void> =>
+export const sendVote = (songId: Song['songId'], session: Session['id']): Promise<void> =>
     axios
         .post(`${apiUrl}/song/${songId}/vote`, {
             session
         })
         .then(() => undefined)
 
-export const searchSong = (searchQuery: string, session: Session['hash']): Promise<Song[]> => {
+export const searchSong = (searchQuery: string, session: Session['id']): Promise<Song[]> => {
     return axios
         .get(`${apiUrl}/search`, {
             params: {
@@ -31,7 +31,7 @@ export const searchSong = (searchQuery: string, session: Session['hash']): Promi
         .then(response => response.data)
 }
 
-export const getCurrent = (session: Session['hash']): Promise<Current> =>
+export const getCurrent = (session: Session['id']): Promise<Current> =>
     axios
         .get(`${apiUrl}/song`, {
             params: {
@@ -40,21 +40,21 @@ export const getCurrent = (session: Session['hash']): Promise<Current> =>
         })
         .then(({ data }) => data)
 
-export const nextSong = (session: Session['hash']): Promise<void> =>
+export const nextSong = (session: Session['id']): Promise<void> =>
     axios
         .post(`${apiUrl}/song/next`, {
             session
         })
         .then(() => undefined)
 
-export const addRecommendation = (session: Session['hash']): Promise<void> =>
+export const addRecommendation = (session: Session['id']): Promise<void> =>
     axios
         .post(`${apiUrl}/song/recommendation`, {
             session
         })
         .then(() => undefined)
 
-export const getRecommendation = (session: Session['hash']): Promise<Song> =>
+export const getRecommendation = (session: Session['id']): Promise<Song> =>
     axios
         .get(`${apiUrl}/song/recommendation`, {
             params: { session }

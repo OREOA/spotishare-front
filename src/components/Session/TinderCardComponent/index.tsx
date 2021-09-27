@@ -11,26 +11,22 @@ const TinderCardComponent = () => {
     const [voteSong, setVoteSong] = useState<Song | null>(null)
 
     useEffect(() => {
-        session && getRecommendation(session.hash).then(data => setVoteSong(data))
+        session && getRecommendation(session.id).then(data => setVoteSong(data))
     }, [session])
 
     const onSwipe = (direction: string) => {
         session &&
-            getRecommendation(session.hash)
-                .then(data => {
-                    setVoteSong(voteSong => {
-                        if (direction === 'right') {
-                            voteSong && session && sendSong(voteSong.songId, session.hash)
-                        }
-                        return data
-                    })
+            getRecommendation(session.id).then(data => {
+                setVoteSong(voteSong => {
+                    if (direction === 'right') {
+                        voteSong &&
+                            session &&
+                            sendSong(voteSong.songId, session.id).then(data => sendVote(data.songId, session.id))
+                    }
                     return data
                 })
-                .then(data => {
-                    if (data && data.songId) {
-                        sendVote(data.songId, session.hash)
-                    }
-                })
+                return data
+            })
     }
 
     return (

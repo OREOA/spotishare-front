@@ -18,18 +18,14 @@ const Queue: React.FC<QueueProps> = ({ queue, className }) => {
 
     const onSongClick = (song: Song): void => {
         if (session) {
-            sendVote(song.songId, session.hash).then(res => console.log(res))
+            sendVote(song.songId, session.id).then(res => console.log(res))
         }
     }
 
     return (
         <Row className={classNames(styles.row, className)}>
             <Col className={styles.col}>
-                <SongList
-                    className={styles.songList}
-                    songs={queue}
-                    onSongClick={onSongClick}
-                />
+                <SongList className={styles.songList} songs={queue} onSongClick={onSongClick} />
             </Col>
         </Row>
     )

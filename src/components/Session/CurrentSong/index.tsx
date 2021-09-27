@@ -23,7 +23,7 @@ const CurrentSong: React.FC<CurrentSongProps> = ({ song }) => {
             </div>
             <Col className={styles.info}>
                 <p className={styles.songName}>{song ? song.name : ''}</p>
-                <p className={styles.songArtist}>{song ? song.artist.name: ''}</p>
+                <p className={styles.songArtist}>{song ? song.artist.name : ''}</p>
             </Col>
         </Row>
     )

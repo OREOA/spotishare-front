@@ -20,10 +20,7 @@ const Song: React.FC<SongProps> = ({ song: { album, albumImg, name, artist, vote
             onClick={onClick}
         >
             <div className={styles.albumImage}>
-                <img
-                    src={albumImg}
-                    alt={`Album: ${album}`}
-                />
+                <img src={albumImg} alt={`Album: ${album}`} />
             </div>
             <Col className={styles.info}>
                 <p className={styles.songName}>{name}</p>
