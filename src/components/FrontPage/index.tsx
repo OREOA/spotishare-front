@@ -20,7 +20,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
     const { session, ownSession } = useContext(SpotishareContext)
 
     const onSessionOpen = useCallback(
-        (hash: Session['hash']) => {
+        (hash: Session['id']) => {
             history.push(`/session/${hash}`)
         },
         [history]
@@ -52,9 +52,9 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                         <SessionHashInput onSend={onSessionOpen} />
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
-                        {ownSession && ownSession.hash ? (
+                        {ownSession && ownSession.id ? (
                             <>
-                                <Link to={`/session/${ownSession.hash}`}>
+                                <Link to={`/session/${ownSession.id}`}>
                                     <Button color="purple">Open my session</Button>
                                 </Link>
                                 <Button color="red" onClick={onDeleteSessionClick}>

@@ -4,26 +4,18 @@ import classNames from 'classnames'
 
 import styles from './songList.module.scss'
 import { Song as SongType } from '../../types/song'
-import { VoteHack } from '../../types/voteHack'
 interface SongListProps {
     songs: SongType[]
-    votes?: VoteHack[]
     onSongClick: (song: SongType) => void
     className?: string
 }
 
-const SongList: React.FC<SongListProps> = ({ songs, votes, onSongClick, className }) => {
+const SongList: React.FC<SongListProps> = ({ songs, onSongClick, className }) => {
     return (
         <div className={classNames(styles.songList, className)}>
             {songs &&
                 songs.map(song => (
-                    <Song
-                        song={song}
-                        className={styles.song}
-                        key={song.id}
-                        votes={votes && votes.find(vote => vote.songId === song.id)}
-                        onClick={() => onSongClick(song)}
-                    />
+                    <Song song={song} className={styles.song} key={song.songId} onClick={() => onSongClick(song)} />
                 ))}
         </div>
     )

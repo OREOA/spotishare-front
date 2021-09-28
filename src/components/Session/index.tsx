@@ -26,13 +26,13 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
     const onClose = useCallback(() => setSearchOpen(false), [setSearchOpen])
 
     useEffect(() => {
-        if (session && session.hash) {
+        if (session && session.id) {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current)
             }
             const call = (): void => {
                 if (session) {
-                    getCurrent(session.hash).then(setCurrent)
+                    getCurrent(session.id).then(setCurrent)
                 }
             }
             intervalRef.current = setInterval(call, ONE_SECOND)
@@ -47,7 +47,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
 
     useEffect(() => {
         const { id } = match.params
-        if (id && id !== (session && session.hash)) {
+        if (id && id !== (session && session.id)) {
             getSession(match.params.id).then(session => setSession(session))
         }
     }, [match, session, setSession])
@@ -69,18 +69,18 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                             <div className={styles.headerContainer}>
                                 <h1 className={styles.title}>Now playing</h1>
                                 {session &&
-                                    session.owner &&
+                                    session.user &&
                                     user &&
-                                    (user.id === session.owner.id ||
+                                    (user.id === session.user ||
                                         // remove hardcoded admins when (if) admin page implemented
                                         user.id === 'mungrits' ||
                                         user.id === 'aapzu' ||
                                         user.id === 'ihme.') && (
                                         <>
-                                            <Button color="purple" onClick={() => nextSong(session.hash)}>
+                                            <Button color="purple" onClick={() => nextSong(session.id)}>
                                                 Skip
                                             </Button>
-                                            <Button color="purple" onClick={() => addRecommendation(session.hash)}>
+                                            <Button color="purple" onClick={() => addRecommendation(session.id)}>
                                                 Add
                                             </Button>
                                         </>
@@ -90,7 +90,7 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                             <Row>
                                 <Col xs={12}>
                                     <Progress
-                                        progress={current.song && current.progress / current.song.duration_ms}
+                                        progress={current.song && current.progress / current.song.duration}
                                         className={styles.progress}
                                     />
                                 </Col>

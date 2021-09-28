@@ -8,7 +8,7 @@ export const getMe = (): Promise<User> => axios.get(`${apiUrl}/me/`).then(({ dat
 
 export const getOwnSession = (): Promise<Session> => axios.get(`${apiUrl}/session/`).then(({ data }) => data)
 
-export const getSession = (hash: Session['hash']): Promise<Session> =>
+export const getSession = (hash: Session['id']): Promise<Session> =>
     axios.get(`${apiUrl}/session/${hash}`).then(({ data }) => data)
 
 export const createSession = (): Promise<Session> => axios.post(`${apiUrl}/session/`).then(({ data }) => data)

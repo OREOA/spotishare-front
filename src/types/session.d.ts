@@ -1,6 +1,6 @@
-import { User } from './user'
-
 export interface Session {
-    hash: string
-    owner: User
+    id: string
+    user: string
+    name: string
+    imageUrl: string
 }

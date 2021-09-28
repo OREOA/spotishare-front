@@ -26,7 +26,7 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
         () =>
             throttle((text: string) => {
                 if (session) {
-                    searchSong(text, session.hash).then(setSearchResults)
+                    searchSong(text, session.id).then(setSearchResults)
                 }
             }, 100),
         [session, setSearchResults]
@@ -48,7 +48,7 @@ const Search: React.FC<SearchProps> = ({ isOpen, onOpen, onClose, className }) =
     const onSongClick = useCallback(
         (song: Song) => {
             if (session) {
-                sendSong(song.id, session.hash).then(() => {
+                sendSong(song.songId, session.id).then(() => {
                     setValue('')
                     setSearchResults([])
                     onClose()

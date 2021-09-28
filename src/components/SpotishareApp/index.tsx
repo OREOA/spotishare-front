@@ -23,7 +23,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
             const raw = localStorage.getItem('spotishare')
             const data = raw && JSON.parse(raw)
             if (data && data.session) {
-                getSession(data.session.hash)
+                getSession(data.session.id)
                     .then(setSession)
                     .catch(() => undefined)
             }
@@ -62,17 +62,18 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     const onNewSession = useCallback(() => {
         createSession().then(s => {
             setOwnSession(s)
-            history.push(`/session/${s.hash}`)
+            history.push(`/session/${s.id}`)
         })
     }, [setOwnSession, history])
 
     const onDeleteSession = useCallback(() => {
-        const ownSessionOpen = session && ownSession && session.hash === ownSession.hash
+        const ownSessionOpen = session && ownSession && session.id === ownSession.id
         deleteSession().then(() => {
             setOwnSession(null)
             if (ownSessionOpen) {
                 setSession(null)
             }
+            localStorage.removeItem('spotishare')
         })
     }, [ownSession, session])
 
