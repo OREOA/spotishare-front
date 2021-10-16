@@ -13,10 +13,11 @@ import { Session } from '../../types/session'
 
 interface FrontPageProps extends RouteComponentProps {
     onNewSession: () => void
+    loading: boolean
     onDeleteSession: () => void
 }
 
-export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onDeleteSession }) => {
+export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, loading, history, onDeleteSession }) => {
     const { session, ownSession } = useContext(SpotishareContext)
 
     const onSessionOpen = useCallback(
@@ -52,7 +53,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                         <SessionHashInput onSend={onSessionOpen} />
                     </div>
                     <div className={classNames(styles.section, styles.newSessionButtonContainer)}>
-                        {ownSession && ownSession.id ? (
+                        {!loading && ownSession && ownSession.id ? (
                             <>
                                 <Link to={`/session/${ownSession.id}`}>
                                     <Button color="purple">Open my session</Button>
@@ -62,7 +63,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onNewSession, history, onD
                                 </Button>
                             </>
                         ) : (
-                            <Button color="purple" onClick={onNewSession}>
+                            <Button color="purple" loading={loading} onClick={onNewSession}>
                                 Start a new session
                             </Button>
                         )}

@@ -14,18 +14,30 @@
   font-size: 12px;
   cursor: pointer;
   border: none;
+  &.purple {
+    background-color: #b21ed7;
+    color: #ffffff;
+  }
+  &.red {
+    background-color: rgb(192, 0, 0);
+    color: #ffffff;
+  }
   &:disabled {
     background-color: #666666;
     cursor: not-allowed;
   }
 }
 
-.purple {
-  background-color: #b21ed7;
-  color: #ffffff;
+.hidden {
+  &.purple {
+    color: #b21ed7;
+  }
+
+  &.red {
+    color: rgb(192, 0, 0);
+  }
 }
 
-.red {
-  background-color: rgb(192, 0, 0);
-  color: #ffffff;
+.loader {
+  position: absolute;
 }

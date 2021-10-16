@@ -13,6 +13,7 @@ import { User } from '../../types/user'
 import Loader from '../Loader/Loader'
 
 const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
+    const [initializing, setInitializing] = useState(false)
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState<User | null>(null)
     const [session, setSession] = useState<SessionType | null>(null)
@@ -45,25 +46,29 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     }, [session])
 
     useEffect(() => {
-        setLoading(true)
+        setInitializing(true)
         getMe()
             .then(user => {
                 setUser(user)
-                setLoading(false)
+                setInitializing(false)
             })
             .catch(() => {
-                setLoading(false)
+                setInitializing(false)
             })
-    }, [setLoading, setUser])
+    }, [setInitializing, setUser])
 
     useEffect(() => {
         getOwnSession().then(s => setOwnSession(s))
     }, [setOwnSession])
 
     const onNewSession = useCallback(() => {
+        setLoading(true)
         createSession().then(s => {
             setOwnSession(s)
-            history.push(`/session/${s.id}`)
+            setTimeout(() => {
+                setLoading(false)
+                history.push(`/session/${s.id}`)
+            }, 3000)
         })
     }, [setOwnSession, history])
 
@@ -78,7 +83,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
         })
     }, [ownSession, session])
 
-    return loading ? (
+    return initializing ? (
         <Loader />
     ) : !user ? (
         <Login redirect={window.location.href} />
@@ -99,7 +104,9 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
                 <Route path="/(session|s)/:id" component={Session} />
                 <Route
                     path="/"
-                    component={() => <FrontPage onNewSession={onNewSession} onDeleteSession={onDeleteSession} />}
+                    component={() => (
+                        <FrontPage onNewSession={onNewSession} loading={loading} onDeleteSession={onDeleteSession} />
+                    )}
                 />
             </Switch>
         </SpotishareContext.Provider>
