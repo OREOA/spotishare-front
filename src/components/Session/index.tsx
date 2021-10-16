@@ -71,7 +71,11 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                     </Container>
                 ) : (
                     <Container className={styles.contentContainer}>
-                        <Button color="purple" onClick={() => onTinderOpen()}>
+                        <Button
+                            color="purple"
+                            onClick={() => onTinderOpen()}
+                            disabled={!(current && current.queue.length > 0)}
+                        >
                             Play tinder
                         </Button>
                         {(current && current.song && (
@@ -87,10 +91,18 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                             user.id === 'aapzu' ||
                                             user.id === 'ihme.') && (
                                             <>
-                                                <Button color="purple" onClick={() => nextSong(session.id)}>
+                                                <Button
+                                                    color="purple"
+                                                    onClick={() => nextSong(session.id)}
+                                                    disabled={!(current && current.queue.length > 0)}
+                                                >
                                                     Skip
                                                 </Button>
-                                                <Button color="purple" onClick={() => addRecommendation(session.id)}>
+                                                <Button
+                                                    color="purple"
+                                                    onClick={() => addRecommendation(session.id)}
+                                                    disabled={!(current && current.queue.length > 0)}
+                                                >
                                                     Add
                                                 </Button>
                                             </>

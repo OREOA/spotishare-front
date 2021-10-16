@@ -47,7 +47,6 @@ const TinderCardComponent = () => {
     const { session } = useContext(SpotishareContext)
     const [voteSong, setVoteSong] = useState<Song | null>(null)
     const tinderRef = useRef<any>(null)
-
     useEffect(() => {
         session && getRecommendation(session.id).then(data => setVoteSong(data))
     }, [session])
@@ -57,8 +56,6 @@ const TinderCardComponent = () => {
             getRecommendation(session.id).then(data => {
                 setVoteSong(voteSong => {
                     if (direction === 'right') {
-                        console.log(JSON.stringify(voteSong))
-
                         voteSong &&
                             session &&
                             sendSong(voteSong.songId, session.id).then(data => sendVote(data.songId, session.id))
@@ -71,10 +68,9 @@ const TinderCardComponent = () => {
             })
     }
 
-    const onSwipeClick = async (direction: string) => {
+    const onSwipeClick = (direction: string) => {
         if (session && tinderRef.current) {
-            await tinderRef.current.swipe(direction)
-            await tinderRef.current.restoreCard()
+            tinderRef.current.swipe(direction)
         }
     }
 
@@ -88,6 +84,7 @@ const TinderCardComponent = () => {
                                 ref={tinderRef}
                                 onSwipe={direction => onSwipe(direction)}
                                 preventSwipe={['right', 'left']}
+                                onCardLeftScreen={e => tinderRef.current.restoreCard()}
                             >
                                 <CardSong song={voteSong} />
                             </TinderCard>
