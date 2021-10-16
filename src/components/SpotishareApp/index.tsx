@@ -81,7 +81,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     return loading ? (
         <Loader />
     ) : !user ? (
-        <Login />
+        <Login redirect={window.location.href} />
     ) : (
         <SpotishareContext.Provider
             value={{

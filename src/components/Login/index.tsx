@@ -20,7 +20,7 @@ const SpotifyLogo: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 )
 
-const Login: React.FC = () => (
+const Login: React.FC<{ redirect: string }> = ({ redirect }) => (
     <div
         style={{
             height: '100%',
@@ -39,7 +39,7 @@ const Login: React.FC = () => (
                 </Col>
             </Row>
             <div className={styles.loginContainer}>
-                <a href={`${process.env.REACT_APP_API_URL}/login`}>
+                <a href={`${process.env.REACT_APP_API_URL}/login?redirectUrl=${redirect}`}>
                     <button className={styles.loginButton}>
                         <SpotifyLogo className={styles.spotifyLogo} />
                         Login with Spotify
