@@ -13,7 +13,7 @@ import { getSession } from '../../services/sessionApi'
 
 import styles from './session.module.scss'
 import Button from '../Button'
-import TinderCardComponent from './TinderCardComponent/index'
+import TinderCardComponent from './TinderCard/index'
 
 const ONE_SECOND = 1000
 
@@ -21,9 +21,12 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
     const intervalRef = useRef<NodeJS.Timeout>()
     const { current, setCurrent, session, setSession, user } = useContext(SpotishareContext)
     const [searchOpen, setSearchOpen] = useState(false)
+    const [tinderOpen, setTinderOpen] = useState(false)
 
     const onOpen = useCallback(() => setSearchOpen(true), [setSearchOpen])
     const onClose = useCallback(() => setSearchOpen(false), [setSearchOpen])
+    const onTinderOpen = useCallback(() => setTinderOpen(true), [setTinderOpen])
+    const onTinderClose = useCallback(() => setTinderOpen(false), [setTinderOpen])
 
     useEffect(() => {
         if (session && session.id) {
@@ -59,52 +62,62 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                 })}
             >
                 <Navbar
-                    backButtonPath={!searchOpen ? '/' : match.url}
-                    onBackButtonClick={searchOpen ? onClose : undefined}
+                    backButtonPath={searchOpen || tinderOpen ? match.url : '/'}
+                    onBackButtonClick={searchOpen ? onClose : tinderOpen ? onTinderClose : undefined}
                 />
-                <Container className={styles.contentContainer}>
-                    {(current && current.song && (
-                        <React.Fragment>
-                            <TinderCardComponent />
-                            <div className={styles.headerContainer}>
-                                <h1 className={styles.title}>Now playing</h1>
-                                {session &&
-                                    session.user &&
-                                    user &&
-                                    (user.id === session.user ||
-                                        // remove hardcoded admins when (if) admin page implemented
-                                        user.id === 'mungrits' ||
-                                        user.id === 'aapzu' ||
-                                        user.id === 'ihme.') && (
-                                        <>
-                                            <Button color="purple" onClick={() => nextSong(session.id)}>
-                                                Skip
-                                            </Button>
-                                            <Button color="purple" onClick={() => addRecommendation(session.id)}>
-                                                Add
-                                            </Button>
-                                        </>
-                                    )}
-                            </div>
-                            <CurrentSong song={current.song} />
-                            <Row>
-                                <Col xs={12}>
-                                    <Progress
-                                        progress={current.song && current.progress / current.song.duration}
-                                        className={styles.progress}
-                                    />
-                                </Col>
-                            </Row>
-                            <Queue queue={current.queue} className={styles.queue} />
-                        </React.Fragment>
-                    )) || (
-                        <p>
-                            No session active/no music playing. Remember to put any song on from Spotify and turn
-                            crossfade off :)
-                        </p>
-                    )}
-                </Container>
-                <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
+                {tinderOpen ? (
+                    <Container className={styles.contentContainer}>
+                        <TinderCardComponent />
+                    </Container>
+                ) : (
+                    <Container className={styles.contentContainer}>
+                        <Button color="purple" onClick={() => onTinderOpen()}>
+                            Play tinder
+                        </Button>
+                        {(current && current.song && (
+                            <React.Fragment>
+                                <div className={styles.headerContainer}>
+                                    <h1 className={styles.title}>Now playing</h1>
+                                    {session &&
+                                        session.user &&
+                                        user &&
+                                        (user.id === session.user ||
+                                            // remove hardcoded admins when (if) admin page implemented
+                                            user.id === 'mungrits' ||
+                                            user.id === 'aapzu' ||
+                                            user.id === 'ihme.') && (
+                                            <>
+                                                <Button color="purple" onClick={() => nextSong(session.id)}>
+                                                    Skip
+                                                </Button>
+                                                <Button color="purple" onClick={() => addRecommendation(session.id)}>
+                                                    Add
+                                                </Button>
+                                            </>
+                                        )}
+                                </div>
+                                <CurrentSong song={current.song} />
+                                <Row>
+                                    <Col xs={12}>
+                                        <Progress
+                                            progress={current.song && current.progress / current.song.duration}
+                                            className={styles.progress}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Queue queue={current.queue} className={styles.queue} />
+                            </React.Fragment>
+                        )) || (
+                            <p>
+                                No session active/no music playing. Remember to put any song on from Spotify and turn
+                                crossfade off :)
+                            </p>
+                        )}
+                    </Container>
+                )}
+                {!tinderOpen && (
+                    <Search className={styles.search} isOpen={searchOpen} onOpen={onOpen} onClose={onClose} />
+                )}
             </div>
         </React.Fragment>
     )

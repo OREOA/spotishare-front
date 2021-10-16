@@ -10,6 +10,7 @@ import SpotishareContext from '../../spotishareContext'
 import { Session as SessionType } from '../../types/session'
 import { Current } from '../../types/current'
 import { User } from '../../types/user'
+import Loader from '../Loader/Loader'
 
 const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     const [loading, setLoading] = useState(false)
@@ -78,7 +79,7 @@ const SpotishareApp: React.FC<RouteComponentProps> = ({ history }) => {
     }, [ownSession, session])
 
     return loading ? (
-        <div>Loading...</div>
+        <Loader />
     ) : !user ? (
         <Login />
     ) : (

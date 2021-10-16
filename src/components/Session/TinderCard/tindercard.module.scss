@@ -1,0 +1,61 @@
+@import '../../../index.scss';
+
+.container {
+  padding-top: 1rem;
+}
+
+.cardContainer {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 16px 0 #00000040;
+}
+
+.img {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.info {
+  padding: 1rem 1rem;
+  h2,
+  p {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    cursor: default;
+    @media (max-width: #{map-get($container-max-widths, sm)}) {
+      font-size: 14px;
+    }
+  }
+  h2 {
+    color: #b21ed7;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @media (max-width: #{map-get($container-max-widths, sm)}) {
+      font-size: 18px;
+    }
+  }
+  p {
+    color: #666;
+  }
+}
+
+.btnRow {
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  cursor: pointer;
+  padding-top: 6px;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  border: 0;
+  background: #ffffff;
+  box-shadow: 0 0 16px 0 #00000040;
+  display: inline-block;
+}
