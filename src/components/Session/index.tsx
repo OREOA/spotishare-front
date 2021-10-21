@@ -98,13 +98,6 @@ const Session: React.FC<RouteComponentProps<{ id: string }>> = ({ match, history
                                                 >
                                                     Skip
                                                 </Button>
-                                                <Button
-                                                    color="purple"
-                                                    onClick={() => addRecommendation(session.id)}
-                                                    disabled={!(current && current.queue.length > 0)}
-                                                >
-                                                    Add
-                                                </Button>
                                             </>
                                         )}
                                 </div>
