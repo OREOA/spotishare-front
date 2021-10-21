@@ -45,31 +45,31 @@ const TinderButton: React.FC<{ onClick: () => void }> = ({ onClick, children }) 
 
 const TinderCardComponent = () => {
     const { session } = useContext(SpotishareContext)
-    const [voteSong, setVoteSong] = useState<Song | null>(null)
+    const [voteSong, setVoteSong] = useState<Song[] | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
     const tinderRef = useRef<any>(null)
     useEffect(() => {
         session && getRecommendation(session.id).then(data => setVoteSong(data))
     }, [session])
 
-    const onSwipe = (direction: string) => {
-        session &&
-            getRecommendation(session.id).then(data => {
-                setVoteSong(voteSong => {
-                    if (direction === 'right') {
-                        voteSong &&
-                            session &&
-                            sendSong(voteSong.songId, session.id).then(data => sendVote(data.songId, session.id))
-                    }
-
-                    return data
-                })
-
-                return data
-            })
+    const onSwipe = async (direction: string, index: number) => {
+        if (session && voteSong) {
+            setLoading(true)
+            if (direction === 'right') {
+                await sendSong(voteSong[0].songId, session.id)
+            }
+            if (index === 0) {
+                const recommendation = await getRecommendation(session.id)
+                setVoteSong(recommendation)
+            }
+            setLoading(false)
+        }
     }
 
     const onSwipeClick = (direction: string) => {
-        if (session && tinderRef.current) {
+        if (session && !loading && tinderRef.current) {
+            console.log('click')
+
             tinderRef.current.swipe(direction)
         }
     }
@@ -78,19 +78,25 @@ const TinderCardComponent = () => {
         <div className={styles.container}>
             {voteSong ? (
                 <>
-                    <Row>
-                        <Col xs="12" lg={{ size: 8, offset: 2 }}>
-                            <TinderCard
-                                ref={tinderRef}
-                                onSwipe={direction => onSwipe(direction)}
-                                preventSwipe={['right', 'left']}
-                                onCardLeftScreen={e => tinderRef.current.restoreCard()}
-                            >
-                                <CardSong song={voteSong} />
-                            </TinderCard>
+                    <Row className={styles.tinderContainer}>
+                        <Col sm="12" md={{ size: 8, offset: 2 }}>
+                            {loading && (
+                                <div className={styles.cardLoader}>
+                                    <Loader />
+                                </div>
+                            )}
+                            {voteSong.map((song, index) => (
+                                <TinderCard
+                                    key={song.songId}
+                                    ref={tinderRef}
+                                    onSwipe={direction => onSwipe(direction, index)}
+                                >
+                                    <CardSong song={song} />
+                                </TinderCard>
+                            ))}
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className={styles.btnContainer}>
                         <Col xs={{ size: 10, offset: 1 }} lg={{ size: 6, offset: 3 }} className={styles.btnRow}>
                             <TinderButton onClick={() => onSwipeClick('left')}>
                                 <ClearIcon />

@@ -43,7 +43,7 @@
 }
 
 .btnRow {
-  padding-top: 2rem;
+  padding-top: 4rem;
   display: flex;
   justify-content: space-between;
 }
@@ -58,4 +58,18 @@
   background: #ffffff;
   box-shadow: 0 0 16px 0 #00000040;
   display: inline-block;
+}
+
+.tinderContainer {
+  height: 550px;
+  @media (max-width: #{map-get($container-max-widths, sm)}) {
+    height: 100vw;
+  }
+}
+
+.cardLoader {
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  top: 50px;
 }

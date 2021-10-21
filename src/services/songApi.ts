@@ -54,7 +54,7 @@ export const addRecommendation = (session: Session['id']): Promise<void> =>
         })
         .then(() => undefined)
 
-export const getRecommendation = (session: Session['id']): Promise<Song> =>
+export const getRecommendation = (session: Session['id']): Promise<Song[]> =>
     axios
         .get(`${apiUrl}/song/recommendation`, {
             params: { session }
