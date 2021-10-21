@@ -8,7 +8,7 @@ import Progress from './Progress'
 import Queue from './Queue'
 import Search from './Search'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { getCurrent, nextSong, addRecommendation } from '../../services/songApi'
+import { getCurrent, nextSong } from '../../services/songApi'
 import { getSession } from '../../services/sessionApi'
 
 import styles from './session.module.scss'
